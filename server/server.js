@@ -12,6 +12,8 @@ import hotelRoutes from './routes/hotelRoutes.js';
 import roomRoutes from './routes/roomRoutes.js';
 import bookingRoutes from './routes/bookingRoutes.js';
 import reviewRoutes from './routes/reviewRoutes.js';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerDocument } from './config/swagger.js';
 
 dotenv.config();
 
@@ -35,13 +37,20 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
+// Swagger Interactive API Documentation UI
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // API Root Directory & Overview
 app.get(['/', '/api'], (req, res) => {
   res.status(200).json({
     message: 'Welcome to QuickStay Luxury Hospitality Core REST API',
     version: '1.0.0',
+    documentation: 'http://localhost:5000/api/docs',
+    swaggerUi: 'http://localhost:5000/api-docs',
     database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
     endpoints: {
+      swaggerDocs: 'GET /api/docs',
       health: 'GET /api/health',
       rooms: 'GET /api/rooms',
       hotels: 'GET /api/hotels',
