@@ -161,24 +161,26 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, role: 'guest' })}
-                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition cursor-pointer ${
+                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition cursor-pointer flex items-center justify-center gap-2 ${
                       formData.role === 'guest'
                         ? 'border-amber-600 bg-amber-50 text-amber-900'
                         : 'border-gray-200 text-gray-600 hover:bg-gray-50'
                     }`}
                   >
-                    🧳 Traveler / Guest
+                    <i className="fa-solid fa-suitcase-rolling text-amber-600"></i>
+                    <span>Traveler / Guest</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => setFormData({ ...formData, role: 'hotelOwner' })}
-                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition cursor-pointer ${
+                    className={`py-2 px-3 rounded-xl border text-xs font-semibold transition cursor-pointer flex items-center justify-center gap-2 ${
                       formData.role === 'hotelOwner'
                         ? 'border-amber-600 bg-amber-50 text-amber-900'
                         : 'border-gray-200 text-gray-600 hover:bg-gray-50'
                     }`}
                   >
-                    🏨 Hotel Host
+                    <i className="fa-solid fa-hotel text-amber-600"></i>
+                    <span>Hotel Host</span>
                   </button>
                 </div>
               </div>
