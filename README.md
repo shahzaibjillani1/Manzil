@@ -5,13 +5,14 @@
 [![Express](https://img.shields.io/badge/Express-4.21-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose_8-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-v4.3-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![ReduxToolkit](https://img.shields.io/badge/Redux_Toolkit-RTK_2.0-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![Swagger](https://img.shields.io/badge/Swagger_UI-OpenAPI_3.0-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://swagger.io/)
 [![JWT](https://img.shields.io/badge/JWT-Stateless_Auth-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)](https://jwt.io/)
 [![FontAwesome](https://img.shields.io/badge/Font_Awesome-6.5.2-528DD7?style=for-the-badge&logo=font-awesome&logoColor=white)](https://fontawesome.com/)
 
-**QuickStay** is a production-grade, full-stack MERN hotel booking and hospitality operations platform. Engineered with **React 19**, **Tailwind CSS v4**, **Node.js/Express**, and **MongoDB (Mongoose 8)**, it bridges consumer-facing luxury reservations with an enterprise-tier Host Management Console and a SuperAdmin Control Portal.
+**QuickStay** is a production-grade, full-stack MERN hotel booking and hospitality operations platform. Engineered with **React 19**, **Redux Toolkit (RTK)**, **Tailwind CSS v4**, **Node.js/Express**, and **MongoDB (Mongoose 8)**, it bridges consumer-facing luxury reservations with an enterprise-tier Host Management Console and a SuperAdmin Control Portal.
 
-The platform is designed with senior architectural principles: **atomic date-overlap reservation locks**, **stateless JWT authentication with role-based access control (RBAC)**, **Swagger OpenAPI 3.0 documentation**, and **MongoDB aggregation pipelines for financial intelligence**.
+The platform is designed with senior architectural principles: **centralized Redux Toolkit state management with async thunks**, **atomic date-overlap reservation locks**, **stateless JWT authentication with role-based access control (RBAC)**, **Swagger OpenAPI 3.0 documentation**, and **MongoDB aggregation pipelines for financial intelligence**.
 
 ---
 
