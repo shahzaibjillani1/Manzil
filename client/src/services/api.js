@@ -149,6 +149,48 @@ export const bookingsAPI = {
   },
 };
 
+export const adminAPI = {
+  getStats: async () => {
+    const { data } = await api.get('/admin/stats');
+    return data.data;
+  },
+  getUsers: async (params = {}) => {
+    const { data } = await api.get('/admin/users', { params });
+    return data;
+  },
+  updateUser: async (id, userData) => {
+    const { data } = await api.put(`/admin/users/${id}`, userData);
+    return data;
+  },
+  deleteUser: async (id) => {
+    const { data } = await api.delete(`/admin/users/${id}`);
+    return data;
+  },
+  getHotels: async (params = {}) => {
+    const { data } = await api.get('/admin/hotels', { params });
+    return data;
+  },
+  deleteHotel: async (id) => {
+    const { data } = await api.delete(`/admin/hotels/${id}`);
+    return data;
+  },
+  getBookings: async (params = {}) => {
+    const { data } = await api.get('/admin/bookings', { params });
+    return data;
+  },
+  updateBooking: async (id, bookingData) => {
+    const { data } = await api.put(`/admin/bookings/${id}`, bookingData);
+    return data;
+  },
+  getReviews: async (params = {}) => {
+    const { data } = await api.get('/admin/reviews', { params });
+    return data;
+  },
+  deleteReview: async (id) => {
+    const { data } = await api.delete(`/admin/reviews/${id}`);
+    return data;
+  },
+};
 // Reviews Endpoints
 export const reviewsAPI = {
   getRoomReviews: async (roomId) => {

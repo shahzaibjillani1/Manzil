@@ -12,6 +12,7 @@ import RoomsPage from './pages/RoomsPage';
 import RoomDetailPage from './pages/RoomDetailPage';
 import MyBookingsPage from './pages/MyBookingsPage';
 import DashboardPage from './pages/DashboardPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 
 function App() {
   const [authModalState, setAuthModalState] = useState({ isOpen: false, mode: 'login' });
@@ -69,6 +70,7 @@ function App() {
               <Route path="/rooms/:id" element={<RoomDetailPage onOpenAuth={openAuth} />} />
               <Route path="/my-bookings" element={<MyBookingsPage onOpenAuth={openAuth} />} />
               <Route path="/dashboard" element={<DashboardPage onOpenAuth={openAuth} />} />
+              <Route path="/admin" element={<AdminDashboardPage onOpenAuth={openAuth} />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </main>

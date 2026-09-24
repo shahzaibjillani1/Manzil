@@ -12,6 +12,7 @@ import {
   ChevronDown,
   PlusCircle,
   Sparkles,
+  Shield,
 } from 'lucide-react';
 
 const Navbar = ({ onOpenAuth }) => {
@@ -110,6 +111,17 @@ const Navbar = ({ onOpenAuth }) => {
           <div className="hidden md:flex items-center space-x-3">
             
             {/* Host Button */}
+                        {/* Admin Button */}
+            {user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                className="px-3.5 py-2 rounded-xl bg-red-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm hover:bg-red-700 transition"
+              >
+                <Shield className="w-3.5 h-3.5" />
+                <span>Admin Panel</span>
+              </Link>
+            )}
+            {/* Host Button */}
             {isOwner ? (
               <Link
                 to="/dashboard"
@@ -157,11 +169,21 @@ const Navbar = ({ onOpenAuth }) => {
                       <p className="text-xs font-bold text-gray-900 truncate">{user.name}</p>
                       <p className="text-[11px] text-gray-600 truncate">{user.email}</p>
                       <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-800">
-                        {user.role === 'hotelOwner' ? 'Verified Host' : 'Guest Traveler'}
+                        {user.role === 'admin' ? 'Platform Admin' : user.role === 'hotelOwner' ? 'Verified Host' : 'Guest Traveler'}
                       </span>
                     </div>
 
                     <div className="py-1">
+                      {user.role === 'admin' && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setUserDropdownOpen(false)}
+                          className="flex items-center gap-2 px-3 py-2 text-xs text-red-700 hover:bg-red-50 rounded-xl font-medium"
+                        >
+                          <Shield className="w-4 h-4 text-red-600" />
+                          Admin Control Panel
+                        </Link>
+                      )}
                       <Link
                         to="/my-bookings"
                         onClick={() => setUserDropdownOpen(false)}
@@ -270,6 +292,15 @@ const Navbar = ({ onOpenAuth }) => {
                 className="block px-3 py-2 rounded-xl text-sm font-medium text-amber-700 bg-amber-50"
               >
                 Host Dashboard
+              </Link>
+            )}
+            {user?.role === 'admin' && (
+              <Link
+                to="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-3 py-2 rounded-xl text-sm font-medium text-red-700 bg-red-50"
+              >
+                Admin Panel
               </Link>
             )}
           </div>
