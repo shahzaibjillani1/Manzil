@@ -9,6 +9,7 @@
 [![Swagger](https://img.shields.io/badge/Swagger_UI-OpenAPI_3.0-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://swagger.io/)
 [![JWT](https://img.shields.io/badge/JWT-Stateless_Auth-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white)](https://jwt.io/)
 [![FontAwesome](https://img.shields.io/badge/Font_Awesome-6.5.2-528DD7?style=for-the-badge&logo=font-awesome&logoColor=white)](https://fontawesome.com/)
+[![Nodemailer](https://img.shields.io/badge/Nodemailer-Email_Service-0F9DCE?style=for-the-badge&logo=minutemailer&logoColor=white)](https://nodemailer.com/)
 
 **QuickStay** is a production-grade, full-stack MERN hotel booking and hospitality operations platform. Engineered with **React 19**, **Redux Toolkit (RTK)**, **Tailwind CSS v4**, **Node.js/Express**, and **MongoDB (Mongoose 8)**, it bridges consumer-facing luxury reservations with an enterprise-tier Host Management Console and a SuperAdmin Control Portal.
 
@@ -42,6 +43,7 @@ The platform is designed with senior architectural principles: **centralized Red
 - **Host Operations Portal**: Dedicated multi-tab host operations dashboard displaying property metrics, room inventory CRUD, active booking tracking, and property registration.
 - **Platform SuperAdmin Portal**: High-level platform control center featuring 6-month revenue trends, live transaction feeds, user role management, listing moderation, and cascading deletion safeguards.
 - **Interactive OpenAPI Specification**: Self-hosted Swagger UI at `/api/docs` exposing every endpoint with request/response schemas and JWT Bearer authorization testing.
+- **Transactional Email Notifications**: Automated booking confirmation emails via Nodemailer with responsive HTML templates, pricing breakdowns, and Ethereal Email sandbox for development testing. Production-ready SMTP configuration.
 - **Production Asset Pipeline**: Font Awesome 6.5.2 integrated via official SVG modules alongside Lucide React for crisp visual communication.
 
 ---
@@ -332,6 +334,7 @@ Hotel-Booking/
 │   │   └── roomRoutes.js                   # /api/rooms router
 │   ├── utils/
 │   │   ├── createAdmin.js                  # Standalone admin user creation utility
+│   │   ├── emailService.js                 # Nodemailer transactional email service
 │   │   ├── seedData.js                     # Realistic luxury hotels & suites dataset
 │   │   └── seedRunner.js                   # Automated database seeder
 │   ├── package.json                        # Backend dependencies
@@ -378,6 +381,13 @@ NODE_ENV=development
 MONGO_URI=mongodb://127.0.0.1:27017/hotel_booking_db
 JWT_SECRET=quickstay_super_secret_jwt_key_2026_production
 JWT_EXPIRE=30d
+
+# Email (optional — uses Ethereal Email sandbox if omitted)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+SMTP_FROM="QuickStay Reservations" <reservations@quickstay.com>
 ```
 
 *(Optional)* Create a `.env` file in the `client/` directory if connecting to a non-standard backend URL:
