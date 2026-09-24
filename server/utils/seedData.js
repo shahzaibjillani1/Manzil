@@ -1,7 +1,7 @@
 export const seedUsers = [
   {
     name: 'Sophia Laurent',
-    email: 'guest@demo.com',
+    email: 'guest@quickstay.com',
     password: 'password123',
     role: 'guest',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300',
@@ -10,7 +10,7 @@ export const seedUsers = [
   },
   {
     name: 'Alexander Wright',
-    email: 'owner@demo.com',
+    email: 'host@quickstay.com',
     password: 'password123',
     role: 'hotelOwner',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300',
@@ -19,7 +19,7 @@ export const seedUsers = [
   },
   {
     name: 'Elena Rostova',
-    email: 'admin@demo.com',
+    email: 'admin@quickstay.com',
     password: 'password123',
     role: 'admin',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300',

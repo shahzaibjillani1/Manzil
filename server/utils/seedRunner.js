@@ -67,7 +67,7 @@ export const seedDatabase = async () => {
       const nights = 3;
 
       await Booking.create({
-        bookingReference: 'QS-DEMO01',
+        bookingReference: 'QS-BK78104',
         user: guestUser._id,
         hotel: createdRooms[0].hotel,
         room: createdRooms[0]._id,
@@ -88,11 +88,11 @@ export const seedDatabase = async () => {
       });
     }
 
-    console.log('✅ [Seed] Database seeded successfully with enterprise mock dataset!');
-    console.log('Demo Credentials:');
-    console.log('  - Guest Traveler:  guest@demo.com  / password123');
-    console.log('  - Hotel Manager:   owner@demo.com  / password123');
-    console.log('  - Platform Admin:  admin@demo.com  / password123');
+    console.log('✅ [Seed] Database initialized with authentic luxury properties dataset!');
+    console.log('Default Credentials:');
+    console.log('  - Guest Traveler:  guest@quickstay.com  / password123');
+    console.log('  - Hotel Host:      host@quickstay.com   / password123');
+    console.log('  - Platform Admin:  admin@quickstay.com  / admin123');
   } catch (error) {
     console.error('❌ [Seed] Error seeding database:', error);
   }
