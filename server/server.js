@@ -35,6 +35,31 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
+// API Root Directory & Overview
+app.get(['/', '/api'], (req, res) => {
+  res.status(200).json({
+    message: 'Welcome to QuickStay Luxury Hospitality Core REST API',
+    version: '1.0.0',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    endpoints: {
+      health: 'GET /api/health',
+      rooms: 'GET /api/rooms',
+      hotels: 'GET /api/hotels',
+      auth: {
+        login: 'POST /api/auth/login',
+        register: 'POST /api/auth/register',
+        profile: 'GET /api/auth/me',
+      },
+      bookings: {
+        create: 'POST /api/bookings',
+        myBookings: 'GET /api/bookings/my',
+        hostBookings: 'GET /api/bookings/owner',
+      },
+      reviews: 'GET /api/reviews/room/:roomId',
+    },
+  });
+});
+
 // System Health & Metrics Check (Senior Engineering Standard)
 app.get('/api/health', (req, res) => {
   res.status(200).json({
