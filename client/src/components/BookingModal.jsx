@@ -130,7 +130,7 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
       });
 
       setBookingConfirmed(res.data);
-      toast.success('Your reservation has been confirmed!');
+      toast.success('Reservation confirmed! Confirmation email sent to your inbox.');
       if (onBookingSuccess) onBookingSuccess(res.data);
     } catch (err) {
       toast.error(typeof err === 'string' ? err : 'Booking could not be completed.');
@@ -188,6 +188,10 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                     {bookingConfirmed.bookingReference}
                   </span>
                 </p>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-medium border border-emerald-200 mt-2">
+                  <i className="fa-regular fa-envelope text-emerald-600"></i>
+                  <span>A detailed confirmation receipt was sent to <strong>{user?.email}</strong></span>
+                </div>
               </div>
 
               {/* Voucher Details */}

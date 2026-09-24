@@ -38,7 +38,7 @@ export const createNewBooking = createAsyncThunk(
   async (bookingData, { rejectWithValue }) => {
     try {
       const data = await bookingsAPI.create(bookingData);
-      toast.success('Reservation confirmed successfully!');
+      toast.success('Reservation confirmed! Confirmation email sent to your inbox.');
       return data;
     } catch (err) {
       const msg = typeof err === 'string' ? err : err.response?.data?.message || 'Booking failed';

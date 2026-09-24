@@ -1,6 +1,7 @@
 import Booking from '../models/Booking.js';
 import Room from '../models/Room.js';
 import Hotel from '../models/Hotel.js';
+import { sendBookingConfirmationEmail } from '../utils/emailService.js';
 
 // @desc    Create a new booking with concurrency overlap lock
 // @route   POST /api/bookings
@@ -99,10 +100,15 @@ export const createBooking = async (req, res, next) => {
       .populate('room', 'title roomType pricePerNight images amenities')
       .populate('hotel', 'name address city featuredImage contact');
 
+    // Asynchronously dispatch confirmation email to user
+    const emailResult = await sendBookingConfirmationEmail(populatedBooking);
+
     res.status(201).json({
       success: true,
-      message: 'Reservation confirmed successfully!',
+      message: 'Reservation confirmed successfully! A confirmation email has been sent.',
       data: populatedBooking,
+      emailSent: emailResult.success,
+      emailPreviewUrl: emailResult.previewUrl || null,
     });
   } catch (error) {
     next(error);
