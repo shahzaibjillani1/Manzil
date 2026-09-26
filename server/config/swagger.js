@@ -655,5 +655,194 @@ export const swaggerDocument = {
         },
       },
     },
+    "/admin/stats": {
+      get: {
+        summary: "Get platform-wide statistics (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: {
+            description:
+              "Aggregated platform stats (users, hotels, bookings, revenue)",
+          },
+          403: { description: "Forbidden - admin access required" },
+        },
+      },
+    },
+    "/admin/users": {
+      get: {
+        summary: "List all registered users (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: { description: "List of all users" },
+          403: { description: "Forbidden - admin access required" },
+        },
+      },
+    },
+    "/admin/users/{id}": {
+      put: {
+        summary: "Update a user's details or role (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  name: { type: "string" },
+                  email: { type: "string" },
+                  role: {
+                    type: "string",
+                    enum: ["guest", "hotelOwner", "admin"],
+                  },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          200: { description: "User updated" },
+          403: { description: "Forbidden - admin access required" },
+          404: { description: "User not found" },
+        },
+      },
+      delete: {
+        summary: "Delete a user (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+        responses: {
+          200: { description: "User deleted" },
+          403: { description: "Forbidden - admin access required" },
+          404: { description: "User not found" },
+        },
+      },
+    },
+    "/admin/hotels": {
+      get: {
+        summary: "List all hotel properties (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: { description: "List of all hotels across the platform" },
+          403: { description: "Forbidden - admin access required" },
+        },
+      },
+    },
+    "/admin/hotels/{id}": {
+      delete: {
+        summary: "Delete a hotel property (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+        responses: {
+          200: { description: "Hotel deleted" },
+          403: { description: "Forbidden - admin access required" },
+          404: { description: "Hotel not found" },
+        },
+      },
+    },
+    "/admin/bookings": {
+      get: {
+        summary: "List all reservations across the platform (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: { description: "List of all bookings" },
+          403: { description: "Forbidden - admin access required" },
+        },
+      },
+    },
+    "/admin/bookings/{id}": {
+      put: {
+        summary: "Update any reservation's status or payment (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+        requestBody: {
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                properties: {
+                  status: {
+                    type: "string",
+                    enum: ["confirmed", "completed", "cancelled"],
+                  },
+                  isPaid: { type: "boolean" },
+                },
+              },
+            },
+          },
+        },
+        responses: {
+          200: { description: "Booking updated" },
+          403: { description: "Forbidden - admin access required" },
+          404: { description: "Booking not found" },
+        },
+      },
+    },
+    "/admin/reviews": {
+      get: {
+        summary: "List all reviews across the platform (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        responses: {
+          200: { description: "List of all reviews" },
+          403: { description: "Forbidden - admin access required" },
+        },
+      },
+    },
+    "/admin/reviews/{id}": {
+      delete: {
+        summary: "Delete a review (Admin only)",
+        tags: ["Admin"],
+        security: [{ BearerAuth: [] }],
+        parameters: [
+          {
+            name: "id",
+            in: "path",
+            required: true,
+            schema: { type: "string" },
+          },
+        ],
+        responses: {
+          200: { description: "Review deleted" },
+          403: { description: "Forbidden - admin access required" },
+          404: { description: "Review not found" },
+        },
+      },
+    },
   },
 };
