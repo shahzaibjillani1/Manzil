@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { bookingsAPI } from '../../services/api';
-import toast from 'react-hot-toast';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { bookingsAPI } from "../../services/api";
+import toast from "react-hot-toast";
 
 const initialState = {
   myBookings: [],
@@ -10,61 +10,70 @@ const initialState = {
 };
 
 export const fetchMyBookings = createAsyncThunk(
-  'bookings/fetchMyBookings',
+  "bookings/fetchMyBookings",
   async (_, { rejectWithValue }) => {
     try {
       const data = await bookingsAPI.getMyBookings();
       return data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch bookings');
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch bookings",
+      );
     }
-  }
+  },
 );
 
 export const fetchOwnerBookings = createAsyncThunk(
-  'bookings/fetchOwnerBookings',
+  "bookings/fetchOwnerBookings",
   async (_, { rejectWithValue }) => {
     try {
       const data = await bookingsAPI.getOwnerBookings();
       return data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch host bookings');
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch host bookings",
+      );
     }
-  }
+  },
 );
 
 export const createNewBooking = createAsyncThunk(
-  'bookings/createNewBooking',
+  "bookings/createNewBooking",
   async (bookingData, { rejectWithValue }) => {
     try {
       const data = await bookingsAPI.create(bookingData);
-      toast.success('Reservation confirmed! Confirmation email sent to your inbox.');
+      toast.success(
+        "Reservation confirmed! Confirmation email sent to your inbox.",
+      );
       return data;
     } catch (err) {
-      const msg = typeof err === 'string' ? err : err.response?.data?.message || 'Booking failed';
+      const msg =
+        typeof err === "string"
+          ? err
+          : err.response?.data?.message || "Booking failed";
       toast.error(msg);
       return rejectWithValue(msg);
     }
-  }
+  },
 );
 
 export const cancelBooking = createAsyncThunk(
-  'bookings/cancelBooking',
+  "bookings/cancelBooking",
   async (bookingId, { rejectWithValue }) => {
     try {
       const data = await bookingsAPI.cancel(bookingId);
-      toast.success('Reservation cancelled');
+      toast.success("Reservation cancelled");
       return data.data;
     } catch (err) {
-      const msg = err.response?.data?.message || 'Could not cancel booking';
+      const msg = err.response?.data?.message || "Could not cancel booking";
       toast.error(msg);
       return rejectWithValue(msg);
     }
-  }
+  },
 );
 
 export const bookingsSlice = createSlice({
-  name: 'bookings',
+  name: "bookings",
   initialState,
   reducers: {
     clearBookingsError: (state) => {
@@ -73,7 +82,6 @@ export const bookingsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // fetchMyBookings
       .addCase(fetchMyBookings.pending, (state) => {
         state.loading = true;
       })
@@ -85,7 +93,6 @@ export const bookingsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // fetchOwnerBookings
       .addCase(fetchOwnerBookings.pending, (state) => {
         state.loading = true;
       })
@@ -97,10 +104,9 @@ export const bookingsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // cancelBooking
       .addCase(cancelBooking.fulfilled, (state, action) => {
         state.myBookings = state.myBookings.map((b) =>
-          b._id === action.payload._id ? action.payload : b
+          b._id === action.payload._id ? action.payload : b,
         );
       });
   },

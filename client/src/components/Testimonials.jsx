@@ -1,13 +1,11 @@
-import React from 'react';
-import { testimonials } from '../assets/assets';
-import { Star, Quote, CheckCircle } from 'lucide-react';
+import React from "react";
+import { testimonials } from "../assets/assets";
+import { Star, Quote, CheckCircle } from "lucide-react";
 
 const Testimonials = () => {
   return (
     <section className="py-20 bg-gray-50/50 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
         <div className="text-center max-w-xl mx-auto mb-14">
           <span className="text-xs font-bold tracking-widest text-amber-600 uppercase">
             Guest Satisfaction
@@ -16,11 +14,11 @@ const Testimonials = () => {
             Praised by Discerning Travelers
           </h2>
           <p className="text-gray-500 text-sm mt-3">
-            Read verified reviews from guests who experienced authentic Manzil hospitality across Pakistan.
+            Read verified reviews from guests who experienced authentic Manzil
+            hospitality across Pakistan.
           </p>
         </div>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((item) => (
             <div
@@ -28,7 +26,6 @@ const Testimonials = () => {
               className="bg-white p-7 rounded-2xl border border-gray-100 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
             >
               <div>
-                {/* Rating stars */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-1 text-amber-400">
                     {[...Array(item.rating)].map((_, i) => (
@@ -43,7 +40,6 @@ const Testimonials = () => {
                 </p>
               </div>
 
-              {/* Guest profile */}
               <div className="flex items-center gap-3 pt-4 border-t border-gray-100">
                 <img
                   src={item.image}
@@ -52,17 +48,17 @@ const Testimonials = () => {
                 />
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <h4 className="text-sm font-bold text-gray-900">{item.name}</h4>
+                    <h4 className="text-sm font-bold text-gray-900">
+                      {item.name}
+                    </h4>
                     <CheckCircle className="w-3.5 h-3.5 text-emerald-500" />
                   </div>
                   <p className="text-xs text-gray-400">{item.address}</p>
                 </div>
               </div>
-
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );

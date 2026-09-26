@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { bookingsAPI, roomsAPI, hotelsAPI } from '../services/api';
+import React, { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
+import { bookingsAPI, roomsAPI, hotelsAPI } from "../services/api";
 import {
   LayoutDashboard,
   DollarSign,
@@ -17,12 +17,12 @@ import {
   MapPin,
   Phone,
   LogIn,
-} from 'lucide-react';
-import toast from 'react-hot-toast';
+} from "lucide-react";
+import toast from "react-hot-toast";
 
 const DashboardPage = ({ onOpenAuth }) => {
   const { user, isOwner, becomeHost, isAuthenticated } = useAuth();
-  const [activeTab, setActiveTab] = useState('bookings'); // 'bookings' | 'rooms' | 'addRoom' | 'addHotel'
+  const [activeTab, setActiveTab] = useState("bookings");
   const [dashboardData, setDashboardData] = useState({
     stats: { totalBookings: 0, totalRevenue: 0, activeBookingsCount: 0 },
     bookings: [],
@@ -31,29 +31,29 @@ const DashboardPage = ({ onOpenAuth }) => {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // New Room Form State
   const [newRoom, setNewRoom] = useState({
-    hotelId: '',
-    roomType: 'Luxury Suite',
-    title: '',
-    description: '',
+    hotelId: "",
+    roomType: "Luxury Suite",
+    title: "",
+    description: "",
     pricePerNight: 350,
     capacity: 2,
     bedCount: 1,
     bathCount: 1,
     roomSizeSqFt: 500,
-    amenities: ['Free WiFi', 'Room Service'],
-    imageUrl: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200',
+    amenities: ["Free WiFi", "Room Service"],
+    imageUrl:
+      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1200",
   });
 
-  // New Hotel Form State
   const [newHotel, setNewHotel] = useState({
-    name: '',
-    city: 'New York',
-    address: '',
-    contact: '',
-    description: '',
-    featuredImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200',
+    name: "",
+    city: "New York",
+    address: "",
+    contact: "",
+    description: "",
+    featuredImage:
+      "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1200",
   });
 
   const fetchDashboard = async () => {
@@ -80,7 +80,7 @@ const DashboardPage = ({ onOpenAuth }) => {
         setNewRoom((prev) => ({ ...prev, hotelId: hData[0]._id }));
       }
     } catch (err) {
-      console.error('Error fetching host operations data:', err);
+      console.error("Error fetching host operations data:", err);
     } finally {
       setLoading(false);
     }
@@ -100,35 +100,42 @@ const DashboardPage = ({ onOpenAuth }) => {
       toast.success(`Booking status updated to ${newStatus}`);
       fetchDashboard();
     } catch {
-      toast.error('Failed to update booking status.');
+      toast.error("Failed to update booking status.");
     }
   };
 
   const handleToggleRoomAvailability = async (roomId, currentAvailability) => {
     try {
       await roomsAPI.update(roomId, { isAvailable: !currentAvailability });
-      toast.success(`Suite is now ${!currentAvailability ? 'Active in Catalog' : 'Paused'}`);
+      toast.success(
+        `Suite is now ${!currentAvailability ? "Active in Catalog" : "Paused"}`,
+      );
       fetchDashboard();
     } catch {
-      toast.error('Failed to update suite availability.');
+      toast.error("Failed to update suite availability.");
     }
   };
 
   const handleDeleteRoom = async (roomId) => {
-    if (!window.confirm('Are you sure you want to permanently remove this suite from your catalog?')) return;
+    if (
+      !window.confirm(
+        "Are you sure you want to permanently remove this suite from your catalog?",
+      )
+    )
+      return;
     try {
       await roomsAPI.delete(roomId);
-      toast.success('Suite removed successfully.');
+      toast.success("Suite removed successfully.");
       fetchDashboard();
     } catch {
-      toast.error('Failed to remove suite.');
+      toast.error("Failed to remove suite.");
     }
   };
 
   const handleCreateRoom = async (e) => {
     e.preventDefault();
     if (!newRoom.hotelId) {
-      toast.error('Please select or register a hotel property first.');
+      toast.error("Please select or register a hotel property first.");
       return;
     }
 
@@ -137,11 +144,11 @@ const DashboardPage = ({ onOpenAuth }) => {
         ...newRoom,
         images: [newRoom.imageUrl],
       });
-      toast.success('New luxury suite created and published to inventory!');
-      setActiveTab('rooms');
+      toast.success("New luxury suite created and published to inventory!");
+      setActiveTab("rooms");
       fetchDashboard();
     } catch (err) {
-      toast.error(typeof err === 'string' ? err : 'Could not create suite.');
+      toast.error(typeof err === "string" ? err : "Could not create suite.");
     }
   };
 
@@ -149,12 +156,12 @@ const DashboardPage = ({ onOpenAuth }) => {
     e.preventDefault();
     try {
       const res = await hotelsAPI.create(newHotel);
-      toast.success('Hotel property registered successfully!');
+      toast.success("Hotel property registered successfully!");
       setNewRoom((prev) => ({ ...prev, hotelId: res.data._id }));
-      setActiveTab('addRoom');
+      setActiveTab("addRoom");
       fetchDashboard();
     } catch (err) {
-      toast.error(typeof err === 'string' ? err : 'Could not register hotel.');
+      toast.error(typeof err === "string" ? err : "Could not register hotel.");
     }
   };
 
@@ -169,11 +176,12 @@ const DashboardPage = ({ onOpenAuth }) => {
             Host Management Console
           </h2>
           <p className="text-xs text-gray-500">
-            Please sign in with a Host account to access property listings, occupancy tracking, and reservations.
+            Please sign in with a Host account to access property listings,
+            occupancy tracking, and reservations.
           </p>
           <div className="pt-2">
             <button
-              onClick={() => onOpenAuth && onOpenAuth('login')}
+              onClick={() => onOpenAuth && onOpenAuth("login")}
               className="w-full py-3 px-4 rounded-xl bg-gray-900 hover:bg-amber-600 text-white font-semibold text-xs transition cursor-pointer flex items-center justify-center gap-1.5"
             >
               <LogIn className="w-4 h-4" />
@@ -185,7 +193,6 @@ const DashboardPage = ({ onOpenAuth }) => {
     );
   }
 
-  // If user is a regular guest, show onboarding to become a host
   if (!isOwner) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center p-6 bg-gray-50/50">
@@ -198,18 +205,29 @@ const DashboardPage = ({ onOpenAuth }) => {
               Host With Manzil • منزل
             </h2>
             <p className="text-xs text-gray-500 mt-2 leading-relaxed">
-              List your boutique hotel, guest house, or mountain resort. Reach travelers seeking authentic Pakistani hospitality with zero double-booking guarantees, verified guest profiles, and comprehensive operations analytics.
+              List your boutique hotel, guest house, or mountain resort. Reach
+              travelers seeking authentic Pakistani hospitality with zero
+              double-booking guarantees, verified guest profiles, and
+              comprehensive operations analytics.
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-3 text-left py-2">
             <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-              <span className="block text-xs font-bold text-gray-900 mb-0.5">Automated Booking</span>
-              <p className="text-[11px] text-gray-500">Atomic concurrency prevention and instant voucher generation.</p>
+              <span className="block text-xs font-bold text-gray-900 mb-0.5">
+                Automated Booking
+              </span>
+              <p className="text-[11px] text-gray-500">
+                Atomic concurrency prevention and instant voucher generation.
+              </p>
             </div>
             <div className="p-3 bg-gray-50 rounded-xl border border-gray-100">
-              <span className="block text-xs font-bold text-gray-900 mb-0.5">Real-time Revenue</span>
-              <p className="text-[11px] text-gray-500">Transparent earnings calculation and occupancy dashboards.</p>
+              <span className="block text-xs font-bold text-gray-900 mb-0.5">
+                Real-time Revenue
+              </span>
+              <p className="text-[11px] text-gray-500">
+                Transparent earnings calculation and occupancy dashboards.
+              </p>
             </div>
           </div>
 
@@ -230,8 +248,6 @@ const DashboardPage = ({ onOpenAuth }) => {
   return (
     <div className="min-h-screen bg-gray-50/40 py-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-8 border-b border-gray-200 gap-4">
           <div>
             <div className="flex items-center gap-2 text-xs font-semibold text-amber-600 uppercase tracking-wider mb-1">
@@ -242,20 +258,22 @@ const DashboardPage = ({ onOpenAuth }) => {
               Operations & Revenue Dashboard
             </h1>
             <p className="text-xs text-gray-500 mt-1">
-              Logged in as Host: <strong className="text-gray-800">{user?.name}</strong> ({user?.email})
+              Logged in as Host:{" "}
+              <strong className="text-gray-800">{user?.name}</strong> (
+              {user?.email})
             </p>
           </div>
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setActiveTab('addHotel')}
+              onClick={() => setActiveTab("addHotel")}
               className="px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 font-semibold text-xs transition flex items-center gap-1.5 shadow-xs cursor-pointer"
             >
               <Building className="w-4 h-4 text-amber-600" />
               <span>+ Register Property</span>
             </button>
             <button
-              onClick={() => setActiveTab('addRoom')}
+              onClick={() => setActiveTab("addRoom")}
               className="px-4 py-2.5 rounded-xl bg-amber-600 text-white font-semibold text-xs hover:bg-amber-700 transition flex items-center gap-1.5 shadow-sm cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
@@ -264,12 +282,12 @@ const DashboardPage = ({ onOpenAuth }) => {
           </div>
         </div>
 
-        {/* Executive KPI Metric Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-8 mb-8">
-          
           <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
             <div className="flex items-center justify-between text-gray-500 mb-2">
-              <span className="text-xs font-medium uppercase tracking-wider">Total Gross Revenue</span>
+              <span className="text-xs font-medium uppercase tracking-wider">
+                Total Gross Revenue
+              </span>
               <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600">
                 <DollarSign className="w-4 h-4" />
               </div>
@@ -285,7 +303,9 @@ const DashboardPage = ({ onOpenAuth }) => {
 
           <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
             <div className="flex items-center justify-between text-gray-500 mb-2">
-              <span className="text-xs font-medium uppercase tracking-wider">Total Reservations</span>
+              <span className="text-xs font-medium uppercase tracking-wider">
+                Total Reservations
+              </span>
               <div className="p-2 rounded-xl bg-blue-50 text-blue-600">
                 <CalendarCheck className="w-4 h-4" />
               </div>
@@ -300,7 +320,9 @@ const DashboardPage = ({ onOpenAuth }) => {
 
           <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
             <div className="flex items-center justify-between text-gray-500 mb-2">
-              <span className="text-xs font-medium uppercase tracking-wider">Active Inventory</span>
+              <span className="text-xs font-medium uppercase tracking-wider">
+                Active Inventory
+              </span>
               <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
                 <BedDouble className="w-4 h-4" />
               </div>
@@ -315,7 +337,9 @@ const DashboardPage = ({ onOpenAuth }) => {
 
           <div className="bg-white p-5 rounded-2xl border border-gray-200 shadow-xs">
             <div className="flex items-center justify-between text-gray-500 mb-2">
-              <span className="text-xs font-medium uppercase tracking-wider">Managed Properties</span>
+              <span className="text-xs font-medium uppercase tracking-wider">
+                Managed Properties
+              </span>
               <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
                 <Building className="w-4 h-4" />
               </div>
@@ -327,49 +351,46 @@ const DashboardPage = ({ onOpenAuth }) => {
               Verified host status
             </span>
           </div>
-
         </div>
 
-        {/* Dashboard Tabs */}
         <div className="bg-white rounded-3xl border border-gray-200 shadow-xs overflow-hidden mb-12">
-          
           <div className="flex flex-wrap border-b border-gray-100 bg-gray-50/60 px-6 pt-3">
             <button
-              onClick={() => setActiveTab('bookings')}
+              onClick={() => setActiveTab("bookings")}
               className={`pb-3 px-4 text-xs font-bold border-b-2 transition cursor-pointer ${
-                activeTab === 'bookings'
-                  ? 'border-amber-600 text-amber-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-900'
+                activeTab === "bookings"
+                  ? "border-amber-600 text-amber-600"
+                  : "border-transparent text-gray-500 hover:text-gray-900"
               }`}
             >
               Guest Reservations ({bookings.length})
             </button>
             <button
-              onClick={() => setActiveTab('rooms')}
+              onClick={() => setActiveTab("rooms")}
               className={`pb-3 px-4 text-xs font-bold border-b-2 transition cursor-pointer ${
-                activeTab === 'rooms'
-                  ? 'border-amber-600 text-amber-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-900'
+                activeTab === "rooms"
+                  ? "border-amber-600 text-amber-600"
+                  : "border-transparent text-gray-500 hover:text-gray-900"
               }`}
             >
               Suite Inventory ({rooms.length})
             </button>
             <button
-              onClick={() => setActiveTab('addRoom')}
+              onClick={() => setActiveTab("addRoom")}
               className={`pb-3 px-4 text-xs font-bold border-b-2 transition cursor-pointer ${
-                activeTab === 'addRoom'
-                  ? 'border-amber-600 text-amber-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-900'
+                activeTab === "addRoom"
+                  ? "border-amber-600 text-amber-600"
+                  : "border-transparent text-gray-500 hover:text-gray-900"
               }`}
             >
               + List New Suite
             </button>
             <button
-              onClick={() => setActiveTab('addHotel')}
+              onClick={() => setActiveTab("addHotel")}
               className={`pb-3 px-4 text-xs font-bold border-b-2 transition cursor-pointer ${
-                activeTab === 'addHotel'
-                  ? 'border-amber-600 text-amber-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-900'
+                activeTab === "addHotel"
+                  ? "border-amber-600 text-amber-600"
+                  : "border-transparent text-gray-500 hover:text-gray-900"
               }`}
             >
               + Register Hotel Property
@@ -377,13 +398,12 @@ const DashboardPage = ({ onOpenAuth }) => {
           </div>
 
           <div className="p-6">
-            
-            {/* TAB 1: GUEST RESERVATIONS TABLE */}
-            {activeTab === 'bookings' && (
+            {activeTab === "bookings" && (
               <div className="overflow-x-auto">
                 {bookings.length === 0 ? (
                   <p className="text-xs text-gray-400 text-center py-8">
-                    No guest reservations recorded yet for your hotel properties.
+                    No guest reservations recorded yet for your hotel
+                    properties.
                   </p>
                 ) : (
                   <table className="w-full text-left text-xs">
@@ -400,21 +420,38 @@ const DashboardPage = ({ onOpenAuth }) => {
                     </thead>
                     <tbody className="divide-y divide-gray-100">
                       {bookings.map((b) => (
-                        <tr key={b._id} className="hover:bg-gray-50/60 transition">
+                        <tr
+                          key={b._id}
+                          className="hover:bg-gray-50/60 transition"
+                        >
                           <td className="py-3 px-2 font-mono font-bold text-gray-900">
                             {b.bookingReference}
                           </td>
                           <td className="py-3 px-2">
-                            <span className="font-semibold text-gray-900 block">{b.guestDetails?.fullName || b.user?.name || 'Guest'}</span>
-                            <span className="text-gray-400 text-[11px] block">{b.guestDetails?.email || b.user?.email}</span>
+                            <span className="font-semibold text-gray-900 block">
+                              {b.guestDetails?.fullName ||
+                                b.user?.name ||
+                                "Guest"}
+                            </span>
+                            <span className="text-gray-400 text-[11px] block">
+                              {b.guestDetails?.email || b.user?.email}
+                            </span>
                           </td>
                           <td className="py-3 px-2">
-                            <span className="font-medium text-gray-800 block">{b.room?.title || b.room?.roomType}</span>
-                            <span className="text-gray-400 text-[11px] block">{b.hotel?.name || 'Grand Resort'}</span>
+                            <span className="font-medium text-gray-800 block">
+                              {b.room?.title || b.room?.roomType}
+                            </span>
+                            <span className="text-gray-400 text-[11px] block">
+                              {b.hotel?.name || "Grand Resort"}
+                            </span>
                           </td>
                           <td className="py-3 px-2 text-gray-600">
-                            <div>{new Date(b.checkInDate).toLocaleDateString()}</div>
-                            <div className="text-[11px] text-gray-400">to {new Date(b.checkOutDate).toLocaleDateString()}</div>
+                            <div>
+                              {new Date(b.checkInDate).toLocaleDateString()}
+                            </div>
+                            <div className="text-[11px] text-gray-400">
+                              to {new Date(b.checkOutDate).toLocaleDateString()}
+                            </div>
                           </td>
                           <td className="py-3 px-2 font-bold font-sans text-gray-900">
                             PKR {b.totalPrice?.toLocaleString()}
@@ -422,28 +459,32 @@ const DashboardPage = ({ onOpenAuth }) => {
                           <td className="py-3 px-2">
                             <span
                               className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase ${
-                                b.status === 'confirmed'
-                                  ? 'bg-emerald-100 text-emerald-800'
-                                  : b.status === 'completed'
-                                  ? 'bg-blue-100 text-blue-800'
-                                  : 'bg-red-100 text-red-700'
+                                b.status === "confirmed"
+                                  ? "bg-emerald-100 text-emerald-800"
+                                  : b.status === "completed"
+                                    ? "bg-blue-100 text-blue-800"
+                                    : "bg-red-100 text-red-700"
                               }`}
                             >
                               {b.status}
                             </span>
                           </td>
                           <td className="py-3 px-2 text-right space-x-1">
-                            {b.status === 'confirmed' && (
+                            {b.status === "confirmed" && (
                               <button
-                                onClick={() => handleUpdateStatus(b._id, 'completed')}
+                                onClick={() =>
+                                  handleUpdateStatus(b._id, "completed")
+                                }
                                 className="px-2.5 py-1 bg-gray-900 hover:bg-emerald-600 text-white rounded-lg text-[11px] font-semibold transition cursor-pointer"
                               >
                                 Mark Completed
                               </button>
                             )}
-                            {b.status !== 'cancelled' && (
+                            {b.status !== "cancelled" && (
                               <button
-                                onClick={() => handleUpdateStatus(b._id, 'cancelled')}
+                                onClick={() =>
+                                  handleUpdateStatus(b._id, "cancelled")
+                                }
                                 className="px-2.5 py-1 border border-red-200 text-red-600 hover:bg-red-50 rounded-lg text-[11px] font-semibold transition cursor-pointer"
                               >
                                 Cancel
@@ -458,8 +499,7 @@ const DashboardPage = ({ onOpenAuth }) => {
               </div>
             )}
 
-            {/* TAB 2: ROOM INVENTORY */}
-            {activeTab === 'rooms' && (
+            {activeTab === "rooms" && (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {rooms.map((room) => (
                   <div
@@ -468,7 +508,10 @@ const DashboardPage = ({ onOpenAuth }) => {
                   >
                     <div className="space-y-2">
                       <img
-                        src={room.images?.[0] || 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600'}
+                        src={
+                          room.images?.[0] ||
+                          "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=600"
+                        }
                         alt={room.title}
                         className="w-full h-36 rounded-xl object-cover"
                       />
@@ -490,11 +533,16 @@ const DashboardPage = ({ onOpenAuth }) => {
 
                     <div className="pt-3 border-t border-gray-100 flex items-center justify-between">
                       <button
-                        onClick={() => handleToggleRoomAvailability(room._id, room.isAvailable)}
+                        onClick={() =>
+                          handleToggleRoomAvailability(
+                            room._id,
+                            room.isAvailable,
+                          )
+                        }
                         className={`inline-flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-lg transition cursor-pointer ${
                           room.isAvailable !== false
-                            ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
-                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
+                            : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                         }`}
                       >
                         {room.isAvailable !== false ? (
@@ -523,11 +571,15 @@ const DashboardPage = ({ onOpenAuth }) => {
               </div>
             )}
 
-            {/* TAB 3: ADD NEW SUITE FORM */}
-            {activeTab === 'addRoom' && (
-              <form onSubmit={handleCreateRoom} className="max-w-2xl mx-auto space-y-4">
+            {activeTab === "addRoom" && (
+              <form
+                onSubmit={handleCreateRoom}
+                className="max-w-2xl mx-auto space-y-4"
+              >
                 <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200 text-xs text-amber-900 mb-4">
-                  <strong>Create New Suite Listing:</strong> Configure specifications, pricing, amenities, and imagery to publish in real time across the marketplace.
+                  <strong>Create New Suite Listing:</strong> Configure
+                  specifications, pricing, amenities, and imagery to publish in
+                  real time across the marketplace.
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -537,10 +589,10 @@ const DashboardPage = ({ onOpenAuth }) => {
                     </label>
                     {hotels.length === 0 ? (
                       <div className="text-xs text-red-600 p-2 border border-red-200 rounded-xl bg-red-50">
-                        No properties found.{' '}
+                        No properties found.{" "}
                         <button
                           type="button"
-                          onClick={() => setActiveTab('addHotel')}
+                          onClick={() => setActiveTab("addHotel")}
                           className="font-bold underline cursor-pointer"
                         >
                           Register a property first.
@@ -549,7 +601,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                     ) : (
                       <select
                         value={newRoom.hotelId}
-                        onChange={(e) => setNewRoom({ ...newRoom, hotelId: e.target.value })}
+                        onChange={(e) =>
+                          setNewRoom({ ...newRoom, hotelId: e.target.value })
+                        }
                         className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600 bg-white"
                       >
                         {hotels.map((h) => (
@@ -569,7 +623,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                       type="text"
                       required
                       value={newRoom.title}
-                      onChange={(e) => setNewRoom({ ...newRoom, title: e.target.value })}
+                      onChange={(e) =>
+                        setNewRoom({ ...newRoom, title: e.target.value })
+                      }
                       placeholder="e.g. Royal Sapphire Oceanfront Penthouse"
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
@@ -583,14 +639,18 @@ const DashboardPage = ({ onOpenAuth }) => {
                     </label>
                     <select
                       value={newRoom.roomType}
-                      onChange={(e) => setNewRoom({ ...newRoom, roomType: e.target.value })}
+                      onChange={(e) =>
+                        setNewRoom({ ...newRoom, roomType: e.target.value })
+                      }
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600 bg-white"
                     >
                       <option value="Luxury Suite">Luxury Suite</option>
                       <option value="Double Bed">Double Bed</option>
                       <option value="Single Bed">Single Bed</option>
                       <option value="Family Suite">Family Suite</option>
-                      <option value="Presidential Penthouse">Presidential Penthouse</option>
+                      <option value="Presidential Penthouse">
+                        Presidential Penthouse
+                      </option>
                     </select>
                   </div>
 
@@ -603,7 +663,12 @@ const DashboardPage = ({ onOpenAuth }) => {
                       required
                       min="50"
                       value={newRoom.pricePerNight}
-                      onChange={(e) => setNewRoom({ ...newRoom, pricePerNight: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setNewRoom({
+                          ...newRoom,
+                          pricePerNight: Number(e.target.value),
+                        })
+                      }
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600 font-sans"
                     />
                   </div>
@@ -618,7 +683,12 @@ const DashboardPage = ({ onOpenAuth }) => {
                       type="number"
                       min="1"
                       value={newRoom.capacity}
-                      onChange={(e) => setNewRoom({ ...newRoom, capacity: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setNewRoom({
+                          ...newRoom,
+                          capacity: Number(e.target.value),
+                        })
+                      }
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
                   </div>
@@ -631,7 +701,12 @@ const DashboardPage = ({ onOpenAuth }) => {
                       type="number"
                       min="1"
                       value={newRoom.bedCount}
-                      onChange={(e) => setNewRoom({ ...newRoom, bedCount: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setNewRoom({
+                          ...newRoom,
+                          bedCount: Number(e.target.value),
+                        })
+                      }
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
                   </div>
@@ -644,7 +719,12 @@ const DashboardPage = ({ onOpenAuth }) => {
                       type="number"
                       min="100"
                       value={newRoom.roomSizeSqFt}
-                      onChange={(e) => setNewRoom({ ...newRoom, roomSizeSqFt: Number(e.target.value) })}
+                      onChange={(e) =>
+                        setNewRoom({
+                          ...newRoom,
+                          roomSizeSqFt: Number(e.target.value),
+                        })
+                      }
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
                   </div>
@@ -658,7 +738,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                     type="url"
                     required
                     value={newRoom.imageUrl}
-                    onChange={(e) => setNewRoom({ ...newRoom, imageUrl: e.target.value })}
+                    onChange={(e) =>
+                      setNewRoom({ ...newRoom, imageUrl: e.target.value })
+                    }
                     className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                   />
                 </div>
@@ -671,7 +753,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                     rows="3"
                     required
                     value={newRoom.description}
-                    onChange={(e) => setNewRoom({ ...newRoom, description: e.target.value })}
+                    onChange={(e) =>
+                      setNewRoom({ ...newRoom, description: e.target.value })
+                    }
                     placeholder="Describe views, marble finishes, designer linens, and bespoke amenities..."
                     className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                   />
@@ -680,7 +764,7 @@ const DashboardPage = ({ onOpenAuth }) => {
                 <div className="pt-2 flex justify-end gap-3">
                   <button
                     type="button"
-                    onClick={() => setActiveTab('rooms')}
+                    onClick={() => setActiveTab("rooms")}
                     className="px-4 py-2 rounded-xl border border-gray-300 text-xs font-semibold hover:bg-gray-50 transition cursor-pointer"
                   >
                     Cancel
@@ -695,11 +779,14 @@ const DashboardPage = ({ onOpenAuth }) => {
               </form>
             )}
 
-            {/* TAB 4: REGISTER NEW HOTEL PROPERTY */}
-            {activeTab === 'addHotel' && (
-              <form onSubmit={handleCreateHotel} className="max-w-2xl mx-auto space-y-4">
+            {activeTab === "addHotel" && (
+              <form
+                onSubmit={handleCreateHotel}
+                className="max-w-2xl mx-auto space-y-4"
+              >
                 <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200 text-xs text-amber-900 mb-4">
-                  <strong>Register a New Hotel Property:</strong> Set up your property profile to list suites and accept reservations.
+                  <strong>Register a New Hotel Property:</strong> Set up your
+                  property profile to list suites and accept reservations.
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -711,7 +798,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                       type="text"
                       required
                       value={newHotel.name}
-                      onChange={(e) => setNewHotel({ ...newHotel, name: e.target.value })}
+                      onChange={(e) =>
+                        setNewHotel({ ...newHotel, name: e.target.value })
+                      }
                       placeholder="e.g. Luminary Azure Bay Resort"
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
@@ -725,7 +814,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                       type="text"
                       required
                       value={newHotel.city}
-                      onChange={(e) => setNewHotel({ ...newHotel, city: e.target.value })}
+                      onChange={(e) =>
+                        setNewHotel({ ...newHotel, city: e.target.value })
+                      }
                       placeholder="e.g. Islamabad, Lahore, Karachi, Hunza..."
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
@@ -741,7 +832,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                       type="text"
                       required
                       value={newHotel.address}
-                      onChange={(e) => setNewHotel({ ...newHotel, address: e.target.value })}
+                      onChange={(e) =>
+                        setNewHotel({ ...newHotel, address: e.target.value })
+                      }
                       placeholder="e.g. 10 Marina Boulevard"
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
@@ -755,7 +848,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                       type="tel"
                       required
                       value={newHotel.contact}
-                      onChange={(e) => setNewHotel({ ...newHotel, contact: e.target.value })}
+                      onChange={(e) =>
+                        setNewHotel({ ...newHotel, contact: e.target.value })
+                      }
                       placeholder="+1 (555) 019-2834"
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
@@ -770,7 +865,12 @@ const DashboardPage = ({ onOpenAuth }) => {
                     type="url"
                     required
                     value={newHotel.featuredImage}
-                    onChange={(e) => setNewHotel({ ...newHotel, featuredImage: e.target.value })}
+                    onChange={(e) =>
+                      setNewHotel({
+                        ...newHotel,
+                        featuredImage: e.target.value,
+                      })
+                    }
                     className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                   />
                 </div>
@@ -783,7 +883,9 @@ const DashboardPage = ({ onOpenAuth }) => {
                     rows="3"
                     required
                     value={newHotel.description}
-                    onChange={(e) => setNewHotel({ ...newHotel, description: e.target.value })}
+                    onChange={(e) =>
+                      setNewHotel({ ...newHotel, description: e.target.value })
+                    }
                     placeholder="Describe the architectural design, concierge service, and dining highlights..."
                     className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                   />
@@ -792,7 +894,7 @@ const DashboardPage = ({ onOpenAuth }) => {
                 <div className="pt-2 flex justify-end gap-3">
                   <button
                     type="button"
-                    onClick={() => setActiveTab('bookings')}
+                    onClick={() => setActiveTab("bookings")}
                     className="px-4 py-2 rounded-xl border border-gray-300 text-xs font-semibold hover:bg-gray-50 transition cursor-pointer"
                   >
                     Cancel
@@ -806,11 +908,8 @@ const DashboardPage = ({ onOpenAuth }) => {
                 </div>
               </form>
             )}
-
           </div>
-
         </div>
-
       </div>
     </div>
   );

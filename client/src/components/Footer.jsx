@@ -1,29 +1,27 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Building2, Mail, Send, CheckCircle2 } from 'lucide-react';
-import toast from 'react-hot-toast';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Building2, Mail, Send, CheckCircle2 } from "lucide-react";
+import toast from "react-hot-toast";
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    if (!email || !email.includes('@')) {
-      toast.error('Please enter a valid email address');
+    if (!email || !email.includes("@")) {
+      toast.error("Please enter a valid email address");
       return;
     }
     setSubscribed(true);
-    toast.success('Thank you for subscribing to our luxury travel dispatches!');
-    setEmail('');
+    toast.success("Thank you for subscribing to our luxury travel dispatches!");
+    setEmail("");
   };
 
   return (
     <footer className="bg-gray-950 text-gray-400 pt-16 pb-12 border-t border-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-gray-800/80">
-          
-          {/* Brand info */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-3">
               <div className="p-2 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 text-white shadow-md">
@@ -39,7 +37,9 @@ const Footer = () => {
               </div>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
-              Curating authentic luxury stays and mountain retreats across Pakistan. From the Margalla Hills to the high peaks of Hunza, experience warm Pakistani hospitality.
+              Curating authentic luxury stays and mountain retreats across
+              Pakistan. From the Margalla Hills to the high peaks of Hunza,
+              experience warm Pakistani hospitality.
             </p>
             <div className="pt-2">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
@@ -49,75 +49,102 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick links */}
           <div>
             <h4 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">
               Destinations
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/rooms?city=Islamabad" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/rooms?city=Islamabad"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Islamabad Hotels
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=Lahore" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/rooms?city=Lahore"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Lahore Heritage
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=Karachi" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/rooms?city=Karachi"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Karachi Seaside
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=Murree" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/rooms?city=Murree"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Murree Hills
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=Swat" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/rooms?city=Swat"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Swat Valley
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=Hunza" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/rooms?city=Hunza"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Hunza Lodges
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Company */}
           <div>
             <h4 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">
               Platform
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/rooms" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/rooms"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   All Rooms & Suites
                 </Link>
               </li>
               <li>
-                <a href="#offers" className="hover:text-amber-400 transition-colors">
+                <a
+                  href="#offers"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Promotions & Deals
                 </a>
               </li>
               <li>
-                <Link to="/my-bookings" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/my-bookings"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Reservation Lookup
                 </Link>
               </li>
               <li>
-                <Link to="/dashboard" className="hover:text-amber-400 transition-colors">
+                <Link
+                  to="/dashboard"
+                  className="hover:text-amber-400 transition-colors"
+                >
                   Host Management Portal
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div>
             <h4 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">
               Private Newsletter
@@ -154,16 +181,11 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom copyright */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
-          <p>© {new Date().getFullYear()} Manzil Hospitality Group (Pvt.) Ltd. All rights reserved.</p>
-          <div className="flex items-center space-x-6">
-            <span>Concurrency Guarded</span>
-            <span>•</span>
-            <span>Role-Based Access Control</span>
-            <span>•</span>
-            <span>REST API Ready</span>
-          </div>
+          <p>
+            © {new Date().getFullYear()} Manzil Hospitality Group (Pvt.) Ltd.
+            All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

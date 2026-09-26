@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import {
   Menu,
   X,
@@ -13,7 +13,7 @@ import {
   PlusCircle,
   Sparkles,
   Shield,
-} from 'lucide-react';
+} from "lucide-react";
 
 const Navbar = ({ onOpenAuth }) => {
   const { user, isAuthenticated, isOwner, logout, becomeHost } = useAuth();
@@ -28,12 +28,12 @@ const Navbar = ({ onOpenAuth }) => {
     setUserDropdownOpen(false);
     setMobileMenuOpen(false);
     if (!isAuthenticated) {
-      onOpenAuth('register');
+      onOpenAuth("register");
       return;
     }
     const success = await becomeHost();
     if (success) {
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   };
 
@@ -41,8 +41,6 @@ const Navbar = ({ onOpenAuth }) => {
     <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          
-          {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
             <div className="p-2 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-500 text-white shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
               <Building2 className="w-6 h-6" />
@@ -62,14 +60,13 @@ const Navbar = ({ onOpenAuth }) => {
             </div>
           </Link>
 
-          {/* Desktop Nav Links */}
           <nav className="hidden md:flex items-center space-x-1 lg:space-x-5 text-sm font-medium">
             <Link
               to="/"
               className={`px-3 py-2 rounded-lg transition-colors ${
-                isActive('/')
-                  ? 'text-amber-600 bg-amber-50/60 font-semibold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                isActive("/")
+                  ? "text-amber-600 bg-amber-50/60 font-semibold"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
               }`}
             >
               Home
@@ -77,9 +74,9 @@ const Navbar = ({ onOpenAuth }) => {
             <Link
               to="/rooms"
               className={`px-3 py-2 rounded-lg transition-colors ${
-                isActive('/rooms')
-                  ? 'text-amber-600 bg-amber-50/60 font-semibold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                isActive("/rooms")
+                  ? "text-amber-600 bg-amber-50/60 font-semibold"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
               }`}
             >
               Explore Rooms
@@ -101,9 +98,9 @@ const Navbar = ({ onOpenAuth }) => {
               <Link
                 to="/my-bookings"
                 className={`px-3 py-2 rounded-lg transition-colors flex items-center gap-1.5 ${
-                  isActive('/my-bookings')
-                    ? 'text-amber-600 bg-amber-50/60 font-semibold'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  isActive("/my-bookings")
+                    ? "text-amber-600 bg-amber-50/60 font-semibold"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                 }`}
               >
                 <Calendar className="w-4 h-4" />
@@ -112,12 +109,8 @@ const Navbar = ({ onOpenAuth }) => {
             )}
           </nav>
 
-          {/* Right Action Area */}
           <div className="hidden md:flex items-center space-x-3">
-            
-            {/* Host Button */}
-                        {/* Admin Button */}
-            {user?.role === 'admin' && (
+            {user?.role === "admin" && (
               <Link
                 to="/admin"
                 className="px-3.5 py-2 rounded-xl bg-red-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm hover:bg-red-700 transition"
@@ -126,7 +119,6 @@ const Navbar = ({ onOpenAuth }) => {
                 <span>Admin Panel</span>
               </Link>
             )}
-            {/* Host Button */}
             {isOwner ? (
               <Link
                 to="/dashboard"
@@ -145,7 +137,6 @@ const Navbar = ({ onOpenAuth }) => {
               </button>
             )}
 
-            {/* User Profile / Auth State */}
             {isAuthenticated ? (
               <div className="relative">
                 <button
@@ -153,16 +144,19 @@ const Navbar = ({ onOpenAuth }) => {
                   className="flex items-center gap-2.5 p-1.5 rounded-full hover:ring-2 hover:ring-amber-200 transition cursor-pointer"
                 >
                   <img
-                    src={user.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}`}
+                    src={
+                      user.avatar ||
+                      `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}`
+                    }
                     alt={user.name}
                     className="w-9 h-9 rounded-full object-cover border border-amber-300 shadow-sm"
                   />
                   <div className="text-left hidden lg:block pr-1">
                     <p className="text-xs font-semibold text-gray-800 leading-tight truncate max-w-[120px]">
-                      {user.name.split(' ')[0]}
+                      {user.name.split(" ")[0]}
                     </p>
                     <p className="text-[10px] text-gray-600 capitalize">
-                      {user.role === 'hotelOwner' ? 'Hotel Host' : user.role}
+                      {user.role === "hotelOwner" ? "Hotel Host" : user.role}
                     </p>
                   </div>
                   <ChevronDown className="w-3.5 h-3.5 text-gray-400" />
@@ -171,15 +165,23 @@ const Navbar = ({ onOpenAuth }) => {
                 {userDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-56 rounded-2xl bg-white shadow-xl ring-1 ring-black/5 p-2 z-50 animate-in fade-in">
                     <div className="px-3 py-2.5 border-b border-gray-100">
-                      <p className="text-xs font-bold text-gray-900 truncate">{user.name}</p>
-                      <p className="text-[11px] text-gray-600 truncate">{user.email}</p>
+                      <p className="text-xs font-bold text-gray-900 truncate">
+                        {user.name}
+                      </p>
+                      <p className="text-[11px] text-gray-600 truncate">
+                        {user.email}
+                      </p>
                       <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-50 text-amber-800">
-                        {user.role === 'admin' ? 'Platform Admin' : user.role === 'hotelOwner' ? 'Verified Host' : 'Guest Traveler'}
+                        {user.role === "admin"
+                          ? "Platform Admin"
+                          : user.role === "hotelOwner"
+                            ? "Verified Host"
+                            : "Guest Traveler"}
                       </span>
                     </div>
 
                     <div className="py-1">
-                      {user.role === 'admin' && (
+                      {user.role === "admin" && (
                         <Link
                           to="/admin"
                           onClick={() => setUserDropdownOpen(false)}
@@ -236,13 +238,13 @@ const Navbar = ({ onOpenAuth }) => {
             ) : (
               <div className="flex items-center space-x-2">
                 <button
-                  onClick={() => onOpenAuth('login')}
+                  onClick={() => onOpenAuth("login")}
                   className="px-4 py-2 text-xs font-semibold text-gray-700 hover:text-gray-900 transition cursor-pointer"
                 >
                   Sign In
                 </button>
                 <button
-                  onClick={() => onOpenAuth('register')}
+                  onClick={() => onOpenAuth("register")}
                   className="px-4 py-2 text-xs font-semibold rounded-xl bg-gray-900 text-white hover:bg-gray-800 transition shadow-sm cursor-pointer"
                 >
                   Get Started
@@ -251,19 +253,21 @@ const Navbar = ({ onOpenAuth }) => {
             )}
           </div>
 
-          {/* Mobile menu trigger */}
           <div className="flex items-center md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl text-gray-600 hover:text-gray-900 hover:bg-gray-100"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-gray-100 bg-white px-4 pt-3 pb-6 space-y-3">
           <div className="space-y-1">
@@ -299,7 +303,7 @@ const Navbar = ({ onOpenAuth }) => {
                 Host Dashboard
               </Link>
             )}
-            {user?.role === 'admin' && (
+            {user?.role === "admin" && (
               <Link
                 to="/admin"
                 onClick={() => setMobileMenuOpen(false)}
@@ -316,11 +320,16 @@ const Navbar = ({ onOpenAuth }) => {
                 <div className="flex items-center justify-between px-3">
                   <div className="flex items-center gap-2">
                     <img
-                      src={user.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}`}
+                      src={
+                        user.avatar ||
+                        `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}`
+                      }
                       alt={user.name}
                       className="w-8 h-8 rounded-full"
                     />
-                    <span className="text-sm font-semibold text-gray-800">{user.name}</span>
+                    <span className="text-sm font-semibold text-gray-800">
+                      {user.name}
+                    </span>
                   </div>
                   <button
                     onClick={() => {
@@ -347,7 +356,7 @@ const Navbar = ({ onOpenAuth }) => {
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    onOpenAuth('login');
+                    onOpenAuth("login");
                   }}
                   className="w-full py-2.5 text-center text-xs font-semibold border border-gray-300 rounded-xl text-gray-700"
                 >
@@ -356,7 +365,7 @@ const Navbar = ({ onOpenAuth }) => {
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    onOpenAuth('register');
+                    onOpenAuth("register");
                   }}
                   className="w-full py-2.5 text-center text-xs font-semibold bg-gray-900 text-white rounded-xl"
                 >

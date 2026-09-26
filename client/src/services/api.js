@@ -1,74 +1,73 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   timeout: 15000,
 });
 
-// Interceptor to attach JWT token
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
-// Interceptor to handle unauthenticated 401
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // Optional: Handle token expiry
     }
     return Promise.reject(error);
-  }
+  },
 );
 
-// Auth Endpoints
 export const authAPI = {
   login: async (credentials) => {
     try {
-      const { data } = await api.post('/auth/login', credentials);
+      const { data } = await api.post("/auth/login", credentials);
       return data;
     } catch (err) {
-      throw err.response?.data?.message || 'Login failed. Please check your credentials.';
+      throw (
+        err.response?.data?.message ||
+        "Login failed. Please check your credentials."
+      );
     }
   },
   register: async (userData) => {
     try {
-      const { data } = await api.post('/auth/register', userData);
+      const { data } = await api.post("/auth/register", userData);
       return data;
     } catch (err) {
-      throw err.response?.data?.message || 'Registration failed.';
+      throw err.response?.data?.message || "Registration failed.";
     }
   },
   getMe: async () => {
-    const { data } = await api.get('/auth/me');
+    const { data } = await api.get("/auth/me");
     return data;
   },
   updateProfile: async (profileData) => {
     try {
-      const { data } = await api.put('/auth/profile', profileData);
+      const { data } = await api.put("/auth/profile", profileData);
       return data;
     } catch (err) {
-      throw err.response?.data?.message || 'Could not update profile.';
+      throw err.response?.data?.message || "Could not update profile.";
     }
   },
 };
 
-// Rooms Endpoints
 export const roomsAPI = {
   getAll: async (params = {}) => {
-    const { data } = await api.get('/rooms', { params });
+    const { data } = await api.get("/rooms", { params });
     return data.data;
   },
   getById: async (id) => {
@@ -76,11 +75,14 @@ export const roomsAPI = {
     return data.data;
   },
   checkAvailability: async (id, checkInDate, checkOutDate) => {
-    const { data } = await api.post(`/rooms/${id}/availability`, { checkInDate, checkOutDate });
+    const { data } = await api.post(`/rooms/${id}/availability`, {
+      checkInDate,
+      checkOutDate,
+    });
     return data;
   },
   create: async (roomData) => {
-    const { data } = await api.post('/rooms', roomData);
+    const { data } = await api.post("/rooms", roomData);
     return data;
   },
   update: async (id, roomData) => {
@@ -93,14 +95,13 @@ export const roomsAPI = {
   },
 };
 
-// Hotels Endpoints
 export const hotelsAPI = {
   getAll: async (params = {}) => {
-    const { data } = await api.get('/hotels', { params });
+    const { data } = await api.get("/hotels", { params });
     return data.data;
   },
   getMyHotels: async () => {
-    const { data } = await api.get('/hotels/my');
+    const { data } = await api.get("/hotels/my");
     return data.data;
   },
   getById: async (id) => {
@@ -108,7 +109,7 @@ export const hotelsAPI = {
     return data.data;
   },
   create: async (hotelData) => {
-    const { data } = await api.post('/hotels', hotelData);
+    const { data } = await api.post("/hotels", hotelData);
     return data;
   },
   update: async (id, hotelData) => {
@@ -121,22 +122,21 @@ export const hotelsAPI = {
   },
 };
 
-// Bookings Endpoints
 export const bookingsAPI = {
   create: async (bookingData) => {
     try {
-      const { data } = await api.post('/bookings', bookingData);
+      const { data } = await api.post("/bookings", bookingData);
       return data;
     } catch (err) {
-      throw err.response?.data?.message || 'Could not complete booking.';
+      throw err.response?.data?.message || "Could not complete booking.";
     }
   },
   getMyBookings: async () => {
-    const { data } = await api.get('/bookings/my');
+    const { data } = await api.get("/bookings/my");
     return data.data;
   },
   getOwnerBookings: async () => {
-    const { data } = await api.get('/bookings/owner');
+    const { data } = await api.get("/bookings/owner");
     return data;
   },
   cancel: async (id) => {
@@ -144,18 +144,21 @@ export const bookingsAPI = {
     return data;
   },
   updateStatus: async (id, status, isPaid) => {
-    const { data } = await api.put(`/bookings/${id}/status`, { status, isPaid });
+    const { data } = await api.put(`/bookings/${id}/status`, {
+      status,
+      isPaid,
+    });
     return data;
   },
 };
 
 export const adminAPI = {
   getStats: async () => {
-    const { data } = await api.get('/admin/stats');
+    const { data } = await api.get("/admin/stats");
     return data.data;
   },
   getUsers: async (params = {}) => {
-    const { data } = await api.get('/admin/users', { params });
+    const { data } = await api.get("/admin/users", { params });
     return data;
   },
   updateUser: async (id, userData) => {
@@ -167,7 +170,7 @@ export const adminAPI = {
     return data;
   },
   getHotels: async (params = {}) => {
-    const { data } = await api.get('/admin/hotels', { params });
+    const { data } = await api.get("/admin/hotels", { params });
     return data;
   },
   deleteHotel: async (id) => {
@@ -175,7 +178,7 @@ export const adminAPI = {
     return data;
   },
   getBookings: async (params = {}) => {
-    const { data } = await api.get('/admin/bookings', { params });
+    const { data } = await api.get("/admin/bookings", { params });
     return data;
   },
   updateBooking: async (id, bookingData) => {
@@ -183,7 +186,7 @@ export const adminAPI = {
     return data;
   },
   getReviews: async (params = {}) => {
-    const { data } = await api.get('/admin/reviews', { params });
+    const { data } = await api.get("/admin/reviews", { params });
     return data;
   },
   deleteReview: async (id) => {
@@ -191,7 +194,6 @@ export const adminAPI = {
     return data;
   },
 };
-// Reviews Endpoints
 export const reviewsAPI = {
   getRoomReviews: async (roomId) => {
     const { data } = await api.get(`/reviews/room/${roomId}`);
@@ -203,9 +205,8 @@ export const reviewsAPI = {
   },
 };
 
-// Healthcheck
 export const checkHealth = async () => {
-  const { data } = await api.get('/health');
+  const { data } = await api.get("/health");
   return data;
 };
 

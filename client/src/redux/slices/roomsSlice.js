@@ -1,14 +1,14 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { roomsAPI } from '../../services/api';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { roomsAPI } from "../../services/api";
 
 const initialState = {
   rooms: [],
   selectedRoom: null,
   filters: {
-    city: 'All',
-    roomType: 'All',
+    city: "All",
+    roomType: "All",
     price: 1500,
-    search: '',
+    search: "",
   },
   loading: false,
   error: null,
@@ -16,43 +16,53 @@ const initialState = {
 };
 
 export const fetchRooms = createAsyncThunk(
-  'rooms/fetchRooms',
+  "rooms/fetchRooms",
   async (params = {}, { rejectWithValue }) => {
     try {
       const data = await roomsAPI.getAll(params);
       return data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch rooms');
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch rooms",
+      );
     }
-  }
+  },
 );
 
 export const fetchRoomById = createAsyncThunk(
-  'rooms/fetchRoomById',
+  "rooms/fetchRoomById",
   async (id, { rejectWithValue }) => {
     try {
       const data = await roomsAPI.getById(id);
       return data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch room');
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch room",
+      );
     }
-  }
+  },
 );
 
 export const checkAvailability = createAsyncThunk(
-  'rooms/checkAvailability',
+  "rooms/checkAvailability",
   async ({ id, checkInDate, checkOutDate }, { rejectWithValue }) => {
     try {
-      const data = await roomsAPI.checkAvailability(id, checkInDate, checkOutDate);
+      const data = await roomsAPI.checkAvailability(
+        id,
+        checkInDate,
+        checkOutDate,
+      );
       return data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Availability check failed');
+      return rejectWithValue(
+        err.response?.data?.message || "Availability check failed",
+      );
     }
-  }
+  },
 );
 
 export const roomsSlice = createSlice({
-  name: 'rooms',
+  name: "rooms",
   initialState,
   reducers: {
     setFilters: (state, action) => {
@@ -68,7 +78,6 @@ export const roomsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // fetchRooms
       .addCase(fetchRooms.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -81,7 +90,6 @@ export const roomsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // fetchRoomById
       .addCase(fetchRoomById.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -94,14 +102,14 @@ export const roomsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // checkAvailability
       .addCase(checkAvailability.fulfilled, (state, action) => {
         state.availability = action.payload;
       });
   },
 });
 
-export const { setFilters, resetFilters, clearSelectedRoom } = roomsSlice.actions;
+export const { setFilters, resetFilters, clearSelectedRoom } =
+  roomsSlice.actions;
 
 export const selectRooms = (state) => state.rooms.rooms;
 export const selectSelectedRoom = (state) => state.rooms.selectedRoom;

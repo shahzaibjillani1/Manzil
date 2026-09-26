@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { hotelsAPI } from '../../services/api';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { hotelsAPI } from "../../services/api";
 
 const initialState = {
   hotels: [],
@@ -10,31 +10,35 @@ const initialState = {
 };
 
 export const fetchHotels = createAsyncThunk(
-  'hotels/fetchHotels',
+  "hotels/fetchHotels",
   async (params = {}, { rejectWithValue }) => {
     try {
       const data = await hotelsAPI.getAll(params);
       return data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch hotels');
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch hotels",
+      );
     }
-  }
+  },
 );
 
 export const fetchMyHotels = createAsyncThunk(
-  'hotels/fetchMyHotels',
+  "hotels/fetchMyHotels",
   async (_, { rejectWithValue }) => {
     try {
       const data = await hotelsAPI.getMyHotels();
       return data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch host hotels');
+      return rejectWithValue(
+        err.response?.data?.message || "Failed to fetch host hotels",
+      );
     }
-  }
+  },
 );
 
 export const hotelsSlice = createSlice({
-  name: 'hotels',
+  name: "hotels",
   initialState,
   reducers: {
     clearHotelsError: (state) => {
@@ -43,7 +47,6 @@ export const hotelsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // fetchHotels
       .addCase(fetchHotels.pending, (state) => {
         state.loading = true;
       })
@@ -55,7 +58,6 @@ export const hotelsSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // fetchMyHotels
       .addCase(fetchMyHotels.fulfilled, (state, action) => {
         state.myHotels = action.payload;
       });
