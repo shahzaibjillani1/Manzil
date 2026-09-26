@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { authAPI } from '../../services/api';
 import toast from 'react-hot-toast';
 
-// Initial state loaded from localStorage if present
 const storedUser = localStorage.getItem('user');
 const storedToken = localStorage.getItem('token');
 
@@ -14,7 +13,6 @@ const initialState = {
   error: null,
 };
 
-// Async Thunks
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
@@ -39,7 +37,7 @@ export const registerUser = createAsyncThunk(
       const data = await authAPI.register(userData);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
-      toast.success(`Welcome to QuickStay, ${data.user.name}!`);
+      toast.success(`Welcome to Manzil, ${data.user.name}!`);
       return data;
     } catch (err) {
       const msg = typeof err === 'string' ? err : err.response?.data?.message || 'Registration failed';
@@ -115,7 +113,6 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Login
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -130,7 +127,6 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Register
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -145,7 +141,6 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-      // Load current user
       .addCase(loadCurrentUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.isAuthenticated = true;
@@ -155,11 +150,9 @@ export const authSlice = createSlice({
         state.token = null;
         state.isAuthenticated = false;
       })
-      // Update profile
       .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.user = action.payload;
       })
-      // Upgrade to host
       .addCase(upgradeToHost.fulfilled, (state, action) => {
         state.user = action.payload;
       });
@@ -168,7 +161,6 @@ export const authSlice = createSlice({
 
 export const { logoutUser, clearAuthError } = authSlice.actions;
 
-// Selectors
 export const selectAuth = (state) => state.auth;
 export const selectCurrentUser = (state) => state.auth.user;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;

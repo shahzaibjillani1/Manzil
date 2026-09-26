@@ -1,18 +1,16 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
 
 let transporterPromise = null;
 
-/**
- * Initialize or reuse Nodemailer Transporter
- * Supports production SMTP configuration via environment variables,
- * with automatic fallback to Ethereal Email for instant testing.
- */
 const getTransporter = async () => {
   if (transporterPromise) return transporterPromise;
 
   transporterPromise = (async () => {
-    // 1. If real SMTP credentials are provided in .env
-    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    if (
+      process.env.SMTP_HOST &&
+      process.env.SMTP_USER &&
+      process.env.SMTP_PASS
+    ) {
       return nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: Number(process.env.SMTP_PORT) || 587,
@@ -24,13 +22,14 @@ const getTransporter = async () => {
       });
     }
 
-    // 2. Otherwise generate Ethereal test account for local testing
     try {
       const testAccount = await nodemailer.createTestAccount();
-      console.log('📧 [Email Service] Using Ethereal Email test account for development:');
+      console.log(
+        "📧 [Email Service] Using Ethereal Email test account for development:",
+      );
       console.log(`   User: ${testAccount.user}`);
       return nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
+        host: "smtp.ethereal.email",
         port: 587,
         secure: false,
         auth: {
@@ -39,7 +38,9 @@ const getTransporter = async () => {
         },
       });
     } catch (err) {
-      console.warn('⚠️ [Email Service] Ethereal account creation failed, using console transport fallback.');
+      console.warn(
+        "⚠️ [Email Service] Ethereal account creation failed, using console transport fallback.",
+      );
       return nodemailer.createTransport({
         jsonTransport: true,
       });
@@ -49,34 +50,35 @@ const getTransporter = async () => {
   return transporterPromise;
 };
 
-/**
- * Send Booking Confirmation Email to User
- * @param {Object} booking - Fully populated booking document
- */
 export const sendBookingConfirmationEmail = async (booking) => {
   try {
     const transporter = await getTransporter();
 
     const guestEmail = booking.guestDetails?.email || booking.user?.email;
-    const guestName = booking.guestDetails?.fullName || booking.user?.name || 'Valued Guest';
-    const hotelName = booking.hotel?.name || 'Luxury Hotel Property';
-    const hotelCity = booking.hotel?.city || '';
-    const hotelAddress = booking.hotel?.address || '';
-    const roomTitle = booking.room?.title || 'Luxury Suite';
-    const checkIn = new Date(booking.checkInDate).toLocaleDateString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
+    const guestName =
+      booking.guestDetails?.fullName || booking.user?.name || "Valued Guest";
+    const hotelName = booking.hotel?.name || "Luxury Hotel Property";
+    const hotelCity = booking.hotel?.city || "";
+    const hotelAddress = booking.hotel?.address || "";
+    const roomTitle = booking.room?.title || "Luxury Suite";
+    const checkIn = new Date(booking.checkInDate).toLocaleDateString("en-US", {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
-    const checkOut = new Date(booking.checkOutDate).toLocaleDateString('en-US', {
-      weekday: 'short',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    const checkOut = new Date(booking.checkOutDate).toLocaleDateString(
+      "en-US",
+      {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+      },
+    );
 
-    const fromAddress = process.env.SMTP_FROM || '"QuickStay Luxury Suites" <reservations@quickstay.com>';
+    const fromAddress =
+      process.env.SMTP_FROM || '"Manzil Hospitality" <reservations@manzil.pk>';
 
     const htmlContent = `
 <!DOCTYPE html>
@@ -84,7 +86,7 @@ export const sendBookingConfirmationEmail = async (booking) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your QuickStay Reservation Confirmation</title>
+  <title>Your Manzil Reservation Confirmation</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f8fafc; color: #1e293b; margin: 0; padding: 20px; }
     .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border: 1px solid #f1f5f9; }
@@ -114,15 +116,15 @@ export const sendBookingConfirmationEmail = async (booking) => {
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">QuickStay<span>.</span></div>
-      <div class="subtitle">Luxury Suites & Resorts</div>
+      <div class="logo">Manzil<span>.</span> منزل</div>
+      <div class="subtitle">Premier Pakistani Hospitality & Resorts</div>
     </div>
     
     <div class="content">
       <div class="hero-badge">✓ Reservation Confirmed</div>
       <h1 class="greeting">Hello, ${guestName}!</h1>
       <p class="message">
-        Thank you for choosing QuickStay. Your luxury suite reservation has been verified and confirmed.
+        Thank you for choosing Manzil. Your luxury stay reservation has been verified and confirmed.
         Below are your official booking details and check-in voucher reference.
       </p>
 
@@ -134,27 +136,27 @@ export const sendBookingConfirmationEmail = async (booking) => {
         <div class="detail-item"><span class="detail-label">Property:</span> <span class="detail-val"><strong>${hotelName}</strong> (${hotelCity})</span></div>
         <div class="detail-item"><span class="detail-label">Address:</span> <span class="detail-val">${hotelAddress}</span></div>
         <div class="detail-item"><span class="detail-label">Suite:</span> <span class="detail-val">${roomTitle}</span></div>
-        <div class="detail-item"><span class="detail-label">Check-In:</span> <span class="detail-val">${checkIn} (from 3:00 PM)</span></div>
-        <div class="detail-item"><span class="detail-label">Check-Out:</span> <span class="detail-val">${checkOut} (until 11:00 AM)</span></div>
+        <div class="detail-item"><span class="detail-label">Check-In:</span> <span class="detail-val">${checkIn} (from 2:00 PM)</span></div>
+        <div class="detail-item"><span class="detail-label">Check-Out:</span> <span class="detail-val">${checkOut} (until 12:00 PM)</span></div>
         <div class="detail-item"><span class="detail-label">Duration:</span> <span class="detail-val">${booking.nights} night(s) • ${booking.guests} guest(s)</span></div>
-        <div class="detail-item"><span class="detail-label">Payment Status:</span> <span class="detail-val">${booking.isPaid ? 'Paid in Full' : 'Pay At Hotel'} (${booking.paymentMethod})</span></div>
+        <div class="detail-item"><span class="detail-label">Payment Status:</span> <span class="detail-val">${booking.isPaid ? "Paid in Full" : "Pay At Hotel"} (${booking.paymentMethod})</span></div>
       </div>
 
       <div class="price-box">
         <div class="price-label">Total Amount Paid / Due</div>
-        <div class="price-amount">$${booking.totalPrice.toLocaleString()}</div>
-        <div class="price-sub">Includes 12% Hospitality Taxes & Service Surcharges</div>
+        <div class="price-amount">PKR ${booking.totalPrice.toLocaleString()}</div>
+        <div class="price-sub">Includes Provincial Hospitality Taxes & Service Charges</div>
       </div>
 
       <p class="message" style="font-size: 13px; text-align: center; color: #64748b;">
         Need to make changes or have special requests? Simply reply to this email or visit your 
-        <strong>My Reservations</strong> page on the portal.
+        <strong>My Reservations</strong> page on the Manzil portal.
       </p>
     </div>
 
     <div class="footer">
-      © ${new Date().getFullYear()} QuickStay Luxury Hospitality Group. All rights reserved.<br>
-      High-end bespoke hospitality across premier global destinations.
+      © ${new Date().getFullYear()} Manzil Hospitality Group (Pvt.) Ltd. All rights reserved.<br>
+      Authentic luxury hospitality across Pakistan.
     </div>
   </div>
 </body>
@@ -162,7 +164,7 @@ export const sendBookingConfirmationEmail = async (booking) => {
     `;
 
     const textContent = `
-QuickStay - Luxury Suites & Resorts
+Manzil - Premier Pakistani Hospitality
 Reservation Confirmation: ${booking.bookingReference}
 
 Hello ${guestName},
@@ -172,13 +174,13 @@ Your reservation has been confirmed!
 Property: ${hotelName} (${hotelCity})
 Address: ${hotelAddress}
 Suite: ${roomTitle}
-Check-In: ${checkIn} (from 3:00 PM)
-Check-Out: ${checkOut} (until 11:00 AM)
+Check-In: ${checkIn} (from 2:00 PM)
+Check-Out: ${checkOut} (until 12:00 PM)
 Duration: ${booking.nights} nights, ${booking.guests} guest(s)
-Total Price: $${booking.totalPrice} (includes taxes)
-Payment Status: ${booking.isPaid ? 'Paid' : 'Pay At Hotel'} via ${booking.paymentMethod}
+Total Price: PKR ${booking.totalPrice.toLocaleString()} (includes taxes)
+Payment Status: ${booking.isPaid ? "Paid" : "Pay At Hotel"} via ${booking.paymentMethod}
 
-Thank you for choosing QuickStay!
+Thank you for choosing Manzil!
     `;
 
     const mailOptions = {
@@ -190,9 +192,10 @@ Thank you for choosing QuickStay!
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log(`✅ [Email Service] Confirmation email sent to ${guestEmail} for Ref #${booking.bookingReference} (MessageID: ${info.messageId})`);
+    console.log(
+      `✅ [Email Service] Confirmation email sent to ${guestEmail} for Ref #${booking.bookingReference} (MessageID: ${info.messageId})`,
+    );
 
-    // If Ethereal Email was used, print the interactive preview URL
     const previewUrl = nodemailer.getTestMessageUrl(info);
     if (previewUrl) {
       console.log(`🔗 [Email Service] Live Email Preview URL: ${previewUrl}`);
@@ -200,8 +203,10 @@ Thank you for choosing QuickStay!
 
     return { success: true, messageId: info.messageId, previewUrl };
   } catch (error) {
-    console.error('❌ [Email Service] Error dispatching booking email:', error.message);
-    // Return gracefully so booking flow is never blocked
+    console.error(
+      "❌ [Email Service] Error dispatching booking email:",
+      error.message,
+    );
     return { success: false, error: error.message };
   }
 };

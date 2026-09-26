@@ -15,7 +15,6 @@ export const seedDatabase = async () => {
     await User.deleteMany({});
 
     console.log('[Seed] Inserting users...');
-    // Create users individually so password pre-save hook runs properly
     const createdUsers = [];
     for (const userData of seedUsers) {
       const user = await User.create(userData);
@@ -44,7 +43,6 @@ export const seedDatabase = async () => {
     const createdRooms = await Room.insertMany(roomsToInsert);
 
     console.log('[Seed] Inserting verified reviews & bookings...');
-    // Add sample reviews for first 3 rooms
     if (createdRooms.length >= 3 && guestUser) {
       await Review.create({
         user: guestUser._id,
@@ -60,14 +58,13 @@ export const seedDatabase = async () => {
         comment: 'Super clean, gorgeous interior design, and prime location right in the city center.',
       });
 
-      // Add a confirmed sample booking
       const now = new Date();
       const checkIn = new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000);
       const checkOut = new Date(now.getTime() + 8 * 24 * 60 * 60 * 1000);
       const nights = 3;
 
       await Booking.create({
-        bookingReference: 'QS-BK78104',
+        bookingReference: 'MZ-BK78104',
         user: guestUser._id,
         hotel: createdRooms[0].hotel,
         room: createdRooms[0]._id,
@@ -88,11 +85,11 @@ export const seedDatabase = async () => {
       });
     }
 
-    console.log('✅ [Seed] Database initialized with authentic luxury properties dataset!');
+    console.log('✅ [Seed] Database initialized with authentic Pakistani hospitality dataset!');
     console.log('Default Credentials:');
-    console.log('  - Guest Traveler:  guest@quickstay.com  / password123');
-    console.log('  - Hotel Host:      host@quickstay.com   / password123');
-    console.log('  - Platform Admin:  admin@quickstay.com  / admin123');
+    console.log('  - Guest Traveler:  guest@manzil.pk  / password123');
+    console.log('  - Hotel Host:      host@manzil.pk   / password123');
+    console.log('  - Platform Admin:  admin@manzil.pk  / admin123');
   } catch (error) {
     console.error('❌ [Seed] Error seeding database:', error);
   }
@@ -107,3 +104,15 @@ export const autoSeedIfEmpty = async () => {
     console.log(`[Seed] Database already populated with ${roomCount} rooms. Ready to serve.`);
   }
 };
+
+if (process.argv[1]?.includes('seedRunner.js')) {
+  import('mongoose').then(async (m) => {
+    const dotenv = await import('dotenv');
+    dotenv.config();
+    const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/hotel_booking_db';
+    await m.default.connect(uri);
+    await seedDatabase();
+    await m.default.disconnect();
+    process.exit(0);
+  });
+}

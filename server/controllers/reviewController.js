@@ -1,13 +1,10 @@
-import Review from '../models/Review.js';
-import Room from '../models/Room.js';
+import Review from "../models/Review.js";
+import Room from "../models/Room.js";
 
-// @desc    Get verified reviews for a room
-// @route   GET /api/reviews/room/:roomId
-// @access  Public
 export const getRoomReviews = async (req, res, next) => {
   try {
     const reviews = await Review.find({ room: req.params.roomId })
-      .populate('user', 'name avatar')
+      .populate("user", "name avatar")
       .sort({ createdAt: -1 });
 
     res.status(200).json({
@@ -20,9 +17,6 @@ export const getRoomReviews = async (req, res, next) => {
   }
 };
 
-// @desc    Add or update verified review
-// @route   POST /api/reviews/room/:roomId
-// @access  Private
 export const addReview = async (req, res, next) => {
   try {
     const { rating, comment } = req.body;
@@ -31,7 +25,7 @@ export const addReview = async (req, res, next) => {
     if (!rating || !comment) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide both rating and review comment.',
+        message: "Please provide both rating and review comment.",
       });
     }
 
@@ -39,7 +33,7 @@ export const addReview = async (req, res, next) => {
     if (!room) {
       return res.status(404).json({
         success: false,
-        message: 'Room listing not found.',
+        message: "Room listing not found.",
       });
     }
 
@@ -58,20 +52,23 @@ export const addReview = async (req, res, next) => {
       });
     }
 
-    // Recompute room rating
     const allReviews = await Review.find({ room: roomId });
     const avgRating =
-      allReviews.reduce((acc, item) => acc + item.rating, 0) / allReviews.length;
+      allReviews.reduce((acc, item) => acc + item.rating, 0) /
+      allReviews.length;
 
     room.rating = Number(avgRating.toFixed(1));
     room.reviewsCount = allReviews.length;
     await room.save();
 
-    const populatedReview = await Review.findById(review._id).populate('user', 'name avatar');
+    const populatedReview = await Review.findById(review._id).populate(
+      "user",
+      "name avatar",
+    );
 
     res.status(201).json({
       success: true,
-      message: 'Verified review posted successfully!',
+      message: "Verified review posted successfully!",
       data: populatedReview,
     });
   } catch (error) {

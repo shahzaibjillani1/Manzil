@@ -1,4 +1,4 @@
-# QuickStay — Enterprise Luxury Hospitality & Hotel Reservation Platform
+# Manzil (منزل) — Enterprise Pakistani Hospitality & Hotel Reservation Platform
 
 [![React](https://img.shields.io/badge/React-19.2-61dafb?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![NodeJS](https://img.shields.io/badge/Node.js-v20+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -11,7 +11,7 @@
 [![FontAwesome](https://img.shields.io/badge/Font_Awesome-6.5.2-528DD7?style=for-the-badge&logo=font-awesome&logoColor=white)](https://fontawesome.com/)
 [![Nodemailer](https://img.shields.io/badge/Nodemailer-Email_Service-0F9DCE?style=for-the-badge&logo=minutemailer&logoColor=white)](https://nodemailer.com/)
 
-**QuickStay** is a production-grade, full-stack MERN hotel booking and hospitality operations platform. Engineered with **React 19**, **Redux Toolkit (RTK)**, **Tailwind CSS v4**, **Node.js/Express**, and **MongoDB (Mongoose 8)**, it bridges consumer-facing luxury reservations with an enterprise-tier Host Management Console and a SuperAdmin Control Portal.
+**Manzil (منزل)** is a production-grade, full-stack MERN hotel booking and hospitality operations platform celebrating authentic Pakistani luxury and culture across Islamabad, Lahore, Karachi, Murree, Swat, and Hunza. Engineered with **React 19**, **Redux Toolkit (RTK)**, **Tailwind CSS v4**, **Node.js/Express**, and **MongoDB (Mongoose 8)**, it bridges consumer-facing reservations in PKR with an enterprise-tier Host Management Console and a SuperAdmin Control Portal.
 
 The platform is designed with senior architectural principles: **centralized Redux Toolkit state management with async thunks**, **atomic date-overlap reservation locks**, **stateless JWT authentication with role-based access control (RBAC)**, **Swagger OpenAPI 3.0 documentation**, and **MongoDB aggregation pipelines for financial intelligence**.
 
@@ -189,15 +189,15 @@ Pre-configured accounts for testing and evaluation across all platform roles:
 
 | Role | Email | Password | Access Portal |
 | :--- | :--- | :--- | :--- |
-| **Platform Administrator** | `admin@quickstay.com` | `admin123` | [http://localhost:5173/admin](http://localhost:5173/admin) |
-| **Verified Hotel Host** | `host@quickstay.com` | `password123` | [http://localhost:5173/dashboard](http://localhost:5173/dashboard) |
-| **Traveler (Guest)** | `guest@quickstay.com` | `password123` | [http://localhost:5173/my-bookings](http://localhost:5173/my-bookings) |
+| **Platform Administrator** | `admin@manzil.pk` | `admin123` | [http://localhost:5173/admin](http://localhost:5173/admin) |
+| **Verified Hotel Host** | `host@manzil.pk` | `password123` | [http://localhost:5173/dashboard](http://localhost:5173/dashboard) |
+| **Traveler (Guest)** | `guest@manzil.pk` | `password123` | [http://localhost:5173/my-bookings](http://localhost:5173/my-bookings) |
 
 ---
 
 ## 📖 Interactive API Documentation (Swagger)
 
-QuickStay exposes a comprehensive, interactive OpenAPI 3.0 specification powered by `swagger-ui-express`:
+Manzil exposes a comprehensive, interactive OpenAPI 3.0 specification powered by `swagger-ui-express`:
 
 - **Swagger Documentation URL**: [http://localhost:5000/api/docs](http://localhost:5000/api/docs)
 - **Alternate Route**: [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
@@ -379,7 +379,7 @@ Create a `.env` file in the `server/` directory:
 PORT=5000
 NODE_ENV=development
 MONGO_URI=mongodb://127.0.0.1:27017/hotel_booking_db
-JWT_SECRET=quickstay_super_secret_jwt_key_2026_production
+JWT_SECRET=manzil_super_secret_jwt_key_2026_production
 JWT_EXPIRE=30d
 
 # Email (optional — uses Ethereal Email sandbox if omitted)
@@ -387,7 +387,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
 SMTP_PASS=your-app-password
-SMTP_FROM="QuickStay Reservations" <reservations@quickstay.com>
+SMTP_FROM="Manzil Reservations" <reservations@manzil.pk>
 ```
 
 *(Optional)* Create a `.env` file in the `client/` directory if connecting to a non-standard backend URL:
@@ -453,7 +453,7 @@ curl http://localhost:5000/api/health
 # 2. Login as Administrator
 curl -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"admin@quickstay.com","password":"admin123"}'
+  -d '{"email":"admin@manzil.pk","password":"admin123"}'
 
 # 3. Query Real-Time Platform Analytics (using token from step 2)
 curl http://localhost:5000/api/admin/stats \

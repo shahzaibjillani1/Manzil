@@ -195,10 +195,10 @@ const DashboardPage = ({ onOpenAuth }) => {
           </div>
           <div>
             <h2 className="font-playfair text-2xl sm:text-3xl font-bold text-gray-900">
-              Host With QuickStay
+              Host With Manzil • منزل
             </h2>
             <p className="text-xs text-gray-500 mt-2 leading-relaxed">
-              List your boutique hotel, private villas, or penthouses. Reach elite global travelers with zero double-booking guarantees, verified guest profiles, and comprehensive operations analytics.
+              List your boutique hotel, guest house, or mountain resort. Reach travelers seeking authentic Pakistani hospitality with zero double-booking guarantees, verified guest profiles, and comprehensive operations analytics.
             </p>
           </div>
 
@@ -275,7 +275,7 @@ const DashboardPage = ({ onOpenAuth }) => {
               </div>
             </div>
             <div className="text-2xl font-bold text-gray-900 font-sans">
-              ${stats.totalRevenue?.toLocaleString()}
+              PKR {stats.totalRevenue?.toLocaleString()}
             </div>
             <span className="text-[11px] text-emerald-600 font-medium flex items-center gap-1 mt-1">
               <TrendingUp className="w-3.5 h-3.5" />
@@ -417,7 +417,7 @@ const DashboardPage = ({ onOpenAuth }) => {
                             <div className="text-[11px] text-gray-400">to {new Date(b.checkOutDate).toLocaleDateString()}</div>
                           </td>
                           <td className="py-3 px-2 font-bold font-sans text-gray-900">
-                            ${b.totalPrice}
+                            PKR {b.totalPrice?.toLocaleString()}
                           </td>
                           <td className="py-3 px-2">
                             <span
@@ -477,7 +477,7 @@ const DashboardPage = ({ onOpenAuth }) => {
                           {room.roomType}
                         </span>
                         <span className="text-xs font-bold text-gray-900 font-sans">
-                          ${room.pricePerNight} / night
+                          PKR {room.pricePerNight?.toLocaleString()} / night
                         </span>
                       </div>
                       <h4 className="font-playfair font-bold text-sm text-gray-900 line-clamp-1">
@@ -596,7 +596,7 @@ const DashboardPage = ({ onOpenAuth }) => {
 
                   <div>
                     <label className="block text-xs font-semibold text-gray-700 mb-1">
-                      Price / Night ($)
+                      Price / Night (PKR)
                     </label>
                     <input
                       type="number"
@@ -726,7 +726,7 @@ const DashboardPage = ({ onOpenAuth }) => {
                       required
                       value={newHotel.city}
                       onChange={(e) => setNewHotel({ ...newHotel, city: e.target.value })}
-                      placeholder="e.g. Dubai, New York, Singapore..."
+                      placeholder="e.g. Islamabad, Lahore, Karachi, Hunza..."
                       className="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-amber-600"
                     />
                   </div>

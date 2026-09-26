@@ -16,7 +16,7 @@ const Testimonials = () => {
             Praised by Discerning Travelers
           </h2>
           <p className="text-gray-500 text-sm mt-3">
-            Read verified reviews from guests who experienced QuickStay luxury worldwide.
+            Read verified reviews from guests who experienced authentic Manzil hospitality across Pakistan.
           </p>
         </div>
 

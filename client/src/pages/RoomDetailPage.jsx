@@ -393,7 +393,7 @@ const RoomDetailPage = ({ onOpenAuth }) => {
               <div className="flex items-baseline justify-between pb-4 border-b border-gray-100">
                 <div>
                   <span className="text-2xl font-bold font-sans text-gray-900">
-                    ${room.pricePerNight}
+                    PKR {room.pricePerNight?.toLocaleString()}
                   </span>
                   <span className="text-xs text-gray-500 font-normal"> / night</span>
                 </div>

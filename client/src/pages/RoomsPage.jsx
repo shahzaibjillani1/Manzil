@@ -14,7 +14,7 @@ import {
   Check,
 } from 'lucide-react';
 
-const CITIES = ['All', 'Dubai', 'New York', 'Singapore', 'London', 'Paris', 'Bali'];
+const CITIES = ['All', 'Islamabad', 'Lahore', 'Karachi', 'Murree', 'Swat', 'Hunza'];
 const ROOM_TYPES = [
   'All',
   'Luxury Suite',
@@ -37,7 +37,7 @@ const RoomsPage = ({ onOpenAuth }) => {
   // Filters State
   const [city, setCity] = useState(searchParams.get('city') || 'All');
   const [roomType, setRoomType] = useState(searchParams.get('roomType') || 'All');
-  const [maxPrice, setMaxPrice] = useState(1000);
+  const [maxPrice, setMaxPrice] = useState(100000);
   const [guests, setGuests] = useState(searchParams.get('guests') || '1');
   const [search, setSearch] = useState('');
   const [selectedAmenities, setSelectedAmenities] = useState([]);
@@ -214,22 +214,22 @@ const RoomsPage = ({ onOpenAuth }) => {
                   Max Nightly Rate
                 </label>
                 <span className="text-xs font-bold text-amber-600 font-sans">
-                  ${maxPrice}
+                  PKR {maxPrice.toLocaleString()}
                 </span>
               </div>
               <input
                 type="range"
-                min="100"
-                max="1000"
-                step="25"
+                min="10000"
+                max="100000"
+                step="5000"
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
                 className="w-full accent-amber-600 cursor-pointer"
               />
               <div className="flex justify-between text-[10px] text-gray-400 mt-1">
-                <span>$100</span>
-                <span>$500</span>
-                <span>$1000+</span>
+                <span>10k</span>
+                <span>50k</span>
+                <span>100k+</span>
               </div>
             </div>
 

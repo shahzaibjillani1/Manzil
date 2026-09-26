@@ -21,7 +21,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
   const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // Date defaults: tomorrow to +2 days
   const today = new Date();
   const tomorrow = new Date(today);
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -38,7 +37,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
   const [loading, setLoading] = useState(false);
   const [bookingConfirmed, setBookingConfirmed] = useState(null);
 
-  // Credit Card state
   const [cardData, setCardData] = useState({
     cardholderName: '',
     cardNumber: '',
@@ -106,7 +104,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
 
     setLoading(true);
     try {
-      // 1. Check availability
       const availCheck = await roomsAPI.checkAvailability(room._id, checkInDate, checkOutDate);
       if (!availCheck.isAvailable) {
         toast.error(availCheck.message || 'Room is unavailable for these dates');
@@ -114,7 +111,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
         return;
       }
 
-      // 2. Submit booking to MongoDB
       const res = await bookingsAPI.create({
         roomId: room._id,
         checkInDate,
@@ -143,7 +139,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col border border-gray-100">
         
-        {/* Header */}
         <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-gray-900 to-gray-800 text-white">
           <div className="flex items-center gap-2.5">
             <div className="p-2 rounded-xl bg-amber-500/20 text-amber-400">
@@ -166,10 +161,8 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
           </button>
         </div>
 
-        {/* Modal Body */}
         <div className="p-6 overflow-y-auto flex-1">
           {bookingConfirmed ? (
-            /* Confirmation Voucher View */
             <div className="space-y-6 text-center py-4">
               <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-inner">
                 <CheckCircle2 className="w-10 h-10" />
@@ -194,7 +187,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                 </div>
               </div>
 
-              {/* Voucher Details */}
               <div className="bg-gray-50 p-5 rounded-2xl border border-gray-200 text-left space-y-3">
                 <div className="flex justify-between items-start pb-3 border-b border-gray-200">
                   <div>
@@ -225,12 +217,11 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                   </div>
                   <div>
                     <span className="text-gray-400 block">Total Rate</span>
-                    <span className="font-bold text-emerald-600 font-sans">${bookingConfirmed.totalPrice}</span>
+                    <span className="font-bold text-emerald-600 font-sans">PKR {bookingConfirmed.totalPrice?.toLocaleString()}</span>
                   </div>
                 </div>
               </div>
 
-              {/* Action buttons */}
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <button
                   onClick={() => {
@@ -252,10 +243,8 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
               </div>
             </div>
           ) : (
-            /* Booking Form View */
             <form onSubmit={handleCreateBooking} className="space-y-5">
               
-              {/* Not Authenticated Warning */}
               {!isAuthenticated && (
                 <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between">
                   <div className="text-xs text-amber-900">
@@ -273,7 +262,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                 </div>
               )}
 
-              {/* Date Selection */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
@@ -305,7 +293,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                 </div>
               </div>
 
-              {/* Guests Count */}
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1 flex items-center gap-1">
                   <Users className="w-3.5 h-3.5 text-amber-600" />
@@ -324,7 +311,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                 </select>
               </div>
 
-              {/* Payment Method */}
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-2">
                   Select Payment Option
@@ -370,7 +356,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                 </div>
               </div>
 
-              {/* Credit Card Input Fields if Credit Card selected */}
               {paymentMethod === 'Credit Card' && (
                 <div className="p-4 rounded-2xl bg-gray-50 border border-gray-200 space-y-3 animate-in fade-in">
                   <div className="flex items-center justify-between text-xs text-gray-700 font-semibold pb-1">
@@ -441,7 +426,6 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                 </div>
               )}
 
-              {/* Special Requests */}
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
                   Special Requests (Optional)
@@ -455,23 +439,21 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                 />
               </div>
 
-              {/* Rate Breakdown */}
               <div className="bg-gray-50 p-4 rounded-2xl border border-gray-200 space-y-2 text-xs">
                 <div className="flex justify-between text-gray-600">
-                  <span>${pricePerNight} × {nights} nights</span>
-                  <span className="font-sans font-medium">${subtotal}</span>
+                  <span>PKR {pricePerNight?.toLocaleString()} × {nights} nights</span>
+                  <span className="font-sans font-medium">PKR {subtotal?.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
-                  <span>Hospitality tax & resort service fee (12%)</span>
-                  <span className="font-sans font-medium">${taxAndFees}</span>
+                  <span>Hospitality tax & service fee (12%)</span>
+                  <span className="font-sans font-medium">PKR {taxAndFees?.toLocaleString()}</span>
                 </div>
                 <div className="pt-2 border-t border-gray-200 flex justify-between font-bold text-gray-900 text-sm">
                   <span>Total Amount Due</span>
-                  <span className="text-amber-600 font-sans">${totalPrice}</span>
+                  <span className="text-amber-600 font-sans">PKR {totalPrice?.toLocaleString()}</span>
                 </div>
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={loading || !isAuthenticated}
@@ -482,7 +464,7 @@ const BookingModal = ({ isOpen, onClose, room, onBookingSuccess, onOpenAuth }) =
                 ) : (
                   <>
                     <ShieldCheck className="w-4 h-4" />
-                    <span>Confirm Reservation (${totalPrice})</span>
+                    <span>Confirm Reservation (PKR {totalPrice?.toLocaleString()})</span>
                   </>
                 )}
               </button>

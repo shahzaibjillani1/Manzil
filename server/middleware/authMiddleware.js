@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
-// Protect routes: verify JWT Bearer token
 export const protect = async (req, res, next) => {
   let token;
 
@@ -40,7 +39,6 @@ export const protect = async (req, res, next) => {
   }
 };
 
-// Authorize specific user roles (e.g. hotelOwner, admin)
 export const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user || !roles.includes(req.user.role)) {
@@ -53,7 +51,6 @@ export const authorize = (...roles) => {
   };
 };
 
-// Optional auth helper
 export const optionalAuth = async (req, res, next) => {
   if (
     req.headers.authorization &&
@@ -64,7 +61,7 @@ export const optionalAuth = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret123');
       req.user = await User.findById(decoded.id).select('-password');
     } catch {
-      // Ignore
+      
     }
   }
   next();

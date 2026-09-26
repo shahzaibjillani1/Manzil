@@ -63,7 +63,7 @@ const MyBookingsPage = ({ onOpenAuth }) => {
           </div>
           <h2 className="font-playfair text-2xl font-bold text-gray-900">Sign in to View Reservations</h2>
           <p className="text-xs text-gray-500">
-            Please sign in to your QuickStay account to view your confirmed stays, digital vouchers, and reservation receipts.
+            Please sign in to your Manzil account to view your confirmed stays, digital vouchers, and reservation receipts.
           </p>
           <div className="pt-2">
             <button
@@ -210,7 +210,7 @@ const MyBookingsPage = ({ onOpenAuth }) => {
                       <div className="text-left md:text-right">
                         <span className="text-[11px] text-gray-400 block">Total Rate</span>
                         <span className="text-xl font-bold text-gray-900 font-sans">
-                          ${b.totalPrice}
+                          PKR {b.totalPrice?.toLocaleString()}
                         </span>
                       </div>
 
@@ -294,7 +294,7 @@ const MyBookingsPage = ({ onOpenAuth }) => {
               </div>
               <div className="flex justify-between py-1 border-b border-gray-100">
                 <span className="text-gray-500">Total Price</span>
-                <span className="font-bold text-emerald-600 font-sans">${selectedVoucher.totalPrice}</span>
+                <span className="font-bold text-emerald-600 font-sans">PKR {selectedVoucher.totalPrice?.toLocaleString()}</span>
               </div>
               <div className="flex justify-between py-1">
                 <span className="text-gray-500">Payment Status</span>

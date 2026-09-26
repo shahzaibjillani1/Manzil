@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   loginUser,
@@ -25,7 +25,6 @@ export const AuthProvider = ({ children }) => {
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
-    // If token exists in storage on startup, verify and refresh user profile
     const token = localStorage.getItem('token');
     if (token && !user) {
       dispatch(loadCurrentUser());

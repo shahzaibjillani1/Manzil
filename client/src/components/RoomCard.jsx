@@ -129,7 +129,7 @@ const RoomCard = ({ room, onQuickBook }) => {
             <span className="text-xs text-gray-600">Starting from</span>
             <div className="flex items-baseline gap-1">
               <span className="text-xl font-bold text-gray-900 font-sans">
-                ${room.pricePerNight}
+                PKR {room.pricePerNight?.toLocaleString()}
               </span>
               <span className="text-xs text-gray-600 font-normal">/ night</span>
             </div>

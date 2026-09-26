@@ -45,7 +45,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // API Root Directory & Overview
 app.get(['/', '/api'], (req, res) => {
   res.status(200).json({
-    message: 'Welcome to QuickStay Luxury Hospitality Core REST API',
+    message: 'Welcome to Manzil Pakistani Hospitality Core REST API',
     version: '1.0.0',
     documentation: 'http://localhost:5000/api/docs',
     swaggerUi: 'http://localhost:5000/api-docs',

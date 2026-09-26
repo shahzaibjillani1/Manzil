@@ -79,18 +79,18 @@ const HomePage = ({ onOpenAuth }) => {
           {/* Eyebrow badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-amber-300 text-xs font-semibold mb-6">
             <Sparkles className="w-4 h-4 text-amber-400" />
-            <span>Curated Sanctuary Stays Worldwide</span>
+            <span>Pakistan's Premier Hospitality & Mountain Sanctuaries • منزل</span>
           </div>
 
           <h1 className="font-playfair text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-tight text-white mb-6">
             Where Elegance Meets <br className="hidden sm:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-orange-300">
-              Exceptional Stays
+              Pakistani Hospitality
             </span>
           </h1>
 
           <p className="max-w-2xl mx-auto text-base sm:text-lg text-gray-300 mb-10 leading-relaxed font-light">
-            Indulge in handpicked luxury penthouses, private island villas, and iconic city landmark suites engineered for seamless bespoke experiences.
+            Indulge in handpicked luxury suites in Islamabad, heritage palaces in Lahore, seaside retreats in Karachi, and breathtaking mountain lodges in Murree, Swat, and Hunza.
           </p>
 
           {/* Floating Search Bar */}
@@ -108,13 +108,13 @@ const HomePage = ({ onOpenAuth }) => {
                   onChange={(e) => setSearchCity(e.target.value)}
                   className="w-full text-xs font-semibold text-gray-900 bg-transparent focus:outline-none"
                 >
-                  <option value="">All Global Destinations</option>
-                  <option value="Dubai">Dubai, UAE</option>
-                  <option value="New York">New York, USA</option>
-                  <option value="Singapore">Singapore</option>
-                  <option value="London">London, UK</option>
-                  <option value="Paris">Paris, France</option>
-                  <option value="Bali">Bali, Indonesia</option>
+                  <option value="">All Destinations in Pakistan</option>
+                  <option value="Islamabad">Islamabad (Federal Capital)</option>
+                  <option value="Lahore">Lahore (Cultural Hub)</option>
+                  <option value="Karachi">Karachi (City of Lights)</option>
+                  <option value="Murree">Murree (Hill Station)</option>
+                  <option value="Swat">Swat (Valley of Emeralds)</option>
+                  <option value="Hunza">Hunza (Karakoram Peaks)</option>
                 </select>
               </div>
 
@@ -279,7 +279,7 @@ const HomePage = ({ onOpenAuth }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-xl mx-auto mb-14">
             <span className="text-xs font-bold tracking-widest text-amber-400 uppercase">
-              The QuickStay Guarantee
+              The Manzil Guarantee • منزل
             </span>
             <h2 className="font-playfair text-3xl sm:text-4xl font-bold mt-2">
               Uncompromising Standards of Hospitality

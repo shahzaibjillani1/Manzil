@@ -1,11 +1,8 @@
-import Booking from '../models/Booking.js';
-import Room from '../models/Room.js';
-import Hotel from '../models/Hotel.js';
-import { sendBookingConfirmationEmail } from '../utils/emailService.js';
+import Booking from "../models/Booking.js";
+import Room from "../models/Room.js";
+import Hotel from "../models/Hotel.js";
+import { sendBookingConfirmationEmail } from "../utils/emailService.js";
 
-// @desc    Create a new booking with concurrency overlap lock
-// @route   POST /api/bookings
-// @access  Private
 export const createBooking = async (req, res, next) => {
   try {
     const {
@@ -13,14 +10,14 @@ export const createBooking = async (req, res, next) => {
       checkInDate,
       checkOutDate,
       guests = 1,
-      paymentMethod = 'Credit Card',
+      paymentMethod = "Credit Card",
       guestDetails,
     } = req.body;
 
     if (!roomId || !checkInDate || !checkOutDate) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide roomId, checkInDate, and checkOutDate.',
+        message: "Please provide roomId, checkInDate, and checkOutDate.",
       });
     }
 
@@ -30,20 +27,18 @@ export const createBooking = async (req, res, next) => {
     if (start >= end) {
       return res.status(400).json({
         success: false,
-        message: 'Check-out date must be strictly after check-in date.',
+        message: "Check-out date must be strictly after check-in date.",
       });
     }
 
-    // Verify room existence
-    const room = await Room.findById(roomId).populate('hotel');
+    const room = await Room.findById(roomId).populate("hotel");
     if (!room) {
       return res.status(404).json({
         success: false,
-        message: 'Room listing not found.',
+        message: "Room listing not found.",
       });
     }
 
-    // Capacity validation
     if (Number(guests) > room.capacity) {
       return res.status(400).json({
         success: false,
@@ -51,10 +46,9 @@ export const createBooking = async (req, res, next) => {
       });
     }
 
-    // Concurrency Lock: Prevent double booking
     const conflictingBooking = await Booking.findOne({
       room: roomId,
-      status: { $in: ['confirmed', 'pending'] },
+      status: { $in: ["confirmed", "pending"] },
       checkInDate: { $lt: end },
       checkOutDate: { $gt: start },
     });
@@ -62,18 +56,18 @@ export const createBooking = async (req, res, next) => {
     if (conflictingBooking) {
       return res.status(409).json({
         success: false,
-        message: 'Room has already been reserved for these dates. Please choose alternative dates.',
+        message:
+          "Room has already been reserved for these dates. Please choose alternative dates.",
       });
     }
 
-    // Server-side verified pricing calculation
     const diffTime = Math.abs(end - start);
     const nights = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
     const subtotal = nights * room.pricePerNight;
     const taxesAndFees = Math.round(subtotal * 0.12);
     const totalPrice = subtotal + taxesAndFees;
 
-    const isPaid = paymentMethod !== 'Pay At Hotel';
+    const isPaid = paymentMethod !== "Pay At Hotel";
 
     const booking = await Booking.create({
       user: req.user._id,
@@ -86,26 +80,28 @@ export const createBooking = async (req, res, next) => {
       totalPrice,
       paymentMethod,
       isPaid,
-      status: 'confirmed',
+      status: "confirmed",
       guestDetails: {
         fullName: guestDetails?.fullName || req.user.name,
         email: guestDetails?.email || req.user.email,
-        phone: guestDetails?.phone || req.user.phone || '',
-        specialRequests: guestDetails?.specialRequests || '',
+        phone: guestDetails?.phone || req.user.phone || "",
+        specialRequests: guestDetails?.specialRequests || "",
       },
-      stripePaymentIntentId: isPaid ? `pi_${Math.random().toString(36).substring(2, 14)}` : '',
+      stripePaymentIntentId: isPaid
+        ? `pi_${Math.random().toString(36).substring(2, 14)}`
+        : "",
     });
 
     const populatedBooking = await Booking.findById(booking._id)
-      .populate('room', 'title roomType pricePerNight images amenities')
-      .populate('hotel', 'name address city featuredImage contact');
+      .populate("room", "title roomType pricePerNight images amenities")
+      .populate("hotel", "name address city featuredImage contact");
 
-    // Asynchronously dispatch confirmation email to user
     const emailResult = await sendBookingConfirmationEmail(populatedBooking);
 
     res.status(201).json({
       success: true,
-      message: 'Reservation confirmed successfully! A confirmation email has been sent.',
+      message:
+        "Reservation confirmed successfully! A confirmation email has been sent.",
       data: populatedBooking,
       emailSent: emailResult.success,
       emailPreviewUrl: emailResult.previewUrl || null,
@@ -115,14 +111,11 @@ export const createBooking = async (req, res, next) => {
   }
 };
 
-// @desc    Get logged in user's bookings
-// @route   GET /api/bookings/my
-// @access  Private
 export const getMyBookings = async (req, res, next) => {
   try {
     const bookings = await Booking.find({ user: req.user._id })
-      .populate('room', 'title roomType pricePerNight images amenities')
-      .populate('hotel', 'name address city featuredImage contact')
+      .populate("room", "title roomType pricePerNight images amenities")
+      .populate("hotel", "name address city featuredImage contact")
       .sort({ createdAt: -1 });
 
     res.status(200).json({
@@ -135,32 +128,33 @@ export const getMyBookings = async (req, res, next) => {
   }
 };
 
-// @desc    Get host's properties bookings and revenue stats
-// @route   GET /api/bookings/owner
-// @access  Private (Host)
 export const getOwnerBookings = async (req, res, next) => {
   try {
     let hotelIds;
 
-    if (req.user.role === 'admin') {
-      const allHotels = await Hotel.find().select('_id');
+    if (req.user.role === "admin") {
+      const allHotels = await Hotel.find().select("_id");
       hotelIds = allHotels.map((h) => h._id);
     } else {
-      const ownedHotels = await Hotel.find({ owner: req.user._id }).select('_id');
+      const ownedHotels = await Hotel.find({ owner: req.user._id }).select(
+        "_id",
+      );
       hotelIds = ownedHotels.map((h) => h._id);
     }
 
     const bookings = await Booking.find({ hotel: { $in: hotelIds } })
-      .populate('user', 'name email avatar phone')
-      .populate('room', 'title roomType pricePerNight images')
-      .populate('hotel', 'name city')
+      .populate("user", "name email avatar phone")
+      .populate("room", "title roomType pricePerNight images")
+      .populate("hotel", "name city")
       .sort({ createdAt: -1 });
 
     const totalRevenue = bookings
-      .filter((b) => b.status !== 'cancelled')
+      .filter((b) => b.status !== "cancelled")
       .reduce((sum, b) => sum + (b.totalPrice || 0), 0);
 
-    const activeBookingsCount = bookings.filter((b) => b.status === 'confirmed').length;
+    const activeBookingsCount = bookings.filter(
+      (b) => b.status === "confirmed",
+    ).length;
 
     res.status(200).json({
       success: true,
@@ -176,9 +170,6 @@ export const getOwnerBookings = async (req, res, next) => {
   }
 };
 
-// @desc    Cancel a booking
-// @route   PUT /api/bookings/:id/cancel
-// @access  Private
 export const cancelBooking = async (req, res, next) => {
   try {
     const booking = await Booking.findById(req.params.id);
@@ -186,27 +177,27 @@ export const cancelBooking = async (req, res, next) => {
     if (!booking) {
       return res.status(404).json({
         success: false,
-        message: 'Reservation not found.',
+        message: "Reservation not found.",
       });
     }
 
-    // Verify permission: either guest who booked, or host who owns hotel, or admin
-    if (booking.user.toString() !== req.user.id && req.user.role !== 'admin') {
+    if (booking.user.toString() !== req.user.id && req.user.role !== "admin") {
       const hotel = await Hotel.findById(booking.hotel);
       if (!hotel || hotel.owner.toString() !== req.user.id) {
         return res.status(403).json({
           success: false,
-          message: 'You are not authorized to cancel this reservation.',
+          message: "You are not authorized to cancel this reservation.",
         });
       }
     }
 
-    booking.status = 'cancelled';
+    booking.status = "cancelled";
     await booking.save();
 
     res.status(200).json({
       success: true,
-      message: 'Reservation cancelled successfully. Selected dates are now released.',
+      message:
+        "Reservation cancelled successfully. Selected dates are now released.",
       data: booking,
     });
   } catch (error) {
@@ -214,9 +205,6 @@ export const cancelBooking = async (req, res, next) => {
   }
 };
 
-// @desc    Update booking status (Host / Admin)
-// @route   PUT /api/bookings/:id/status
-// @access  Private (Host)
 export const updateBookingStatus = async (req, res, next) => {
   try {
     const { status, isPaid } = req.body;
@@ -225,18 +213,18 @@ export const updateBookingStatus = async (req, res, next) => {
     if (!booking) {
       return res.status(404).json({
         success: false,
-        message: 'Reservation not found.',
+        message: "Reservation not found.",
       });
     }
 
     if (status) booking.status = status;
-    if (typeof isPaid === 'boolean') booking.isPaid = isPaid;
+    if (typeof isPaid === "boolean") booking.isPaid = isPaid;
 
     await booking.save();
 
     res.status(200).json({
       success: true,
-      message: 'Booking status updated successfully.',
+      message: "Booking status updated successfully.",
       data: booking,
     });
   } catch (error) {

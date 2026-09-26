@@ -75,24 +75,26 @@ export const assets = {
 }
 
 export const cities = [
-    "Dubai",
-    "Singapore",
-    "New York",
-    "London",
+    "Islamabad",
+    "Lahore",
+    "Karachi",
+    "Murree",
+    "Swat",
+    "Hunza",
 ];
 
 // Seasonal Curated Packages
 export const exclusiveOffers = [
-    { _id: 1, title: "Metropolitan Elite Package", description: "Complimentary chef's breakfast and late checkout on luxury suites.", priceOff: 25, expiryDate: "Limited Seasonal Access", image: exclusiveOfferCardImg1 },
-    { _id: 2, title: "Romantic Coastal Getaway", description: "Exclusive oceanfront suites with complimentary spa vouchers & champagne.", priceOff: 20, expiryDate: "Exclusive Host Offer", image: exclusiveOfferCardImg2 },
-    { _id: 3, title: "Signature Luxury Retreat", description: "Privileged rates when reserving 14+ days in advance across all premier destinations.", priceOff: 30, expiryDate: "Early Reservation Tier", image: exclusiveOfferCardImg3 },
+    { _id: 1, title: "Northern Escapes & Valleys", description: "Complimentary breakfast, guided mountain trekking, and scenic sunset tea in Hunza & Swat.", priceOff: 25, expiryDate: "Summer Peak Season", image: exclusiveOfferCardImg1 },
+    { _id: 2, title: "Mughal Heritage Experience", description: "Luxury suites in Lahore with authentic heritage tours and complimentary Desi breakfast.", priceOff: 20, expiryDate: "Cultural Weekend Pass", image: exclusiveOfferCardImg2 },
+    { _id: 3, title: "Margalla Hills Executive Stay", description: "Privileged corporate and family rates for diplomatic enclave and Islamabad hill suites.", priceOff: 30, expiryDate: "Advance Booking Privilege", image: exclusiveOfferCardImg3 },
 ];
 
-// Testimonials Dummy Data
+// Testimonials Data
 export const testimonials = [
-    { id: 1, name: "Emma Rodriguez", address: "Barcelona, Spain", image: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200", rating: 5, review: "I've used many booking platforms before, but none compare to the personalized experience and attention to detail that QuickStay provides." },
-    { id: 2, name: "Liam Johnson", address: "New York, USA", image: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200", rating: 4, review: "QuickStay exceeded my expectations. The booking process was seamless, and the hotels were absolutely top-notch. Highly recommended!" },
-    { id: 3, name: "Sophia Lee", address: "Seoul, South Korea", image: "https://images.unsplash.com/photo-1701615004837-40d8573b6652?q=80&w=200", rating: 5, review: "Amazing service! I always find the best luxury accommodations through QuickStay. Their recommendations never disappoint!" }
+    { id: 1, name: "Zainab Malik", address: "Lahore, Pakistan", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200", rating: 5, review: "Manzil transformed our family vacation in Hunza. The personalized Pakistani hospitality and stunning views of Rakaposhi were unforgettable!" },
+    { id: 2, name: "Bilal Ahmed", address: "Islamabad, Pakistan", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200", rating: 5, review: "Manzil exceeded all expectations. Seamless booking, instant confirmation, and the Murree heritage lodge was spotless and cozy. Bohat zabardast service!" },
+    { id: 3, name: "Dr. Ayesha Siddiqui", address: "Karachi, Pakistan", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=200", rating: 5, review: "Finding genuine luxury stays across Pakistan used to be challenging. Manzil has set a new gold standard for hospitality in Pakistan!" }
 ];
 
 // Facility Icon
@@ -107,9 +109,9 @@ export const facilityIcons = {
 // For Room Details Page
 export const roomCommonData = [
     { icon: assets.homeIcon, title: "Clean & Safe Stay", description: "A well-maintained and hygienic space just for you." },
-    { icon: assets.badgeIcon, title: "Enhanced Cleaning", description: "This host follows Staybnb's strict cleaning standards." },
-    { icon: assets.locationFilledIcon, title: "Excellent Location", description: "90% of guests rated the location 5 stars." },
-    { icon: assets.heartIcon, title: "Smooth Check-In", description: "100% of guests gave check-in a 5-star rating." },
+    { icon: assets.badgeIcon, title: "Enhanced Hospitality", description: "This host follows Manzil's strict quality & cleanliness standards." },
+    { icon: assets.locationFilledIcon, title: "Prime Location", description: "95% of guests rated the location 5 stars." },
+    { icon: assets.heartIcon, title: "Warm Pakistani Welcome", description: "100% of guests experienced seamless check-in and gracious host service." },
 ];
 
 

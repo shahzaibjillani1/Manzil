@@ -353,7 +353,7 @@ const AdminDashboardPage = ({ onOpenAuth }) => {
                 <div>
                   <p className="text-xs text-gray-500 font-medium">Gross Platform Revenue</p>
                   <h3 className="text-2xl font-bold font-playfair text-emerald-600 mt-1">
-                    ${(stats?.totalRevenue || 0).toLocaleString()}
+                    PKR {(stats?.totalRevenue || 0).toLocaleString()}
                   </h3>
                   <p className="text-[11px] text-emerald-600 mt-1 flex items-center gap-1 font-medium">
                     <TrendingUp className="w-3 h-3" /> Live Gross Volume
@@ -381,7 +381,7 @@ const AdminDashboardPage = ({ onOpenAuth }) => {
                         <div key={m.month}>
                           <div className="flex justify-between text-xs font-semibold mb-1">
                             <span className="text-gray-600">{m.month}</span>
-                            <span className="text-gray-900">${m.revenue.toLocaleString()}</span>
+                            <span className="text-gray-900">PKR {m.revenue.toLocaleString()}</span>
                           </div>
                           <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                             <div
@@ -434,7 +434,7 @@ const AdminDashboardPage = ({ onOpenAuth }) => {
                               <p className="text-[10px] text-gray-400">{b.guestDetails?.email || b.user?.email}</p>
                             </td>
                             <td className="py-3 text-gray-600">{b.hotel?.name || 'Hotel Property'}</td>
-                            <td className="py-3 font-semibold text-gray-900">${b.totalPrice}</td>
+                            <td className="py-3 font-semibold text-gray-900">PKR {b.totalPrice?.toLocaleString()}</td>
                             <td className="py-3">
                               <span
                                 className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
@@ -732,7 +732,7 @@ const AdminDashboardPage = ({ onOpenAuth }) => {
                           {new Date(b.checkOutDate).toLocaleDateString()}
                           <span className="block text-[10px] text-gray-400">({b.nights} nights)</span>
                         </td>
-                        <td className="py-3.5 font-bold text-gray-900">${b.totalPrice}</td>
+                        <td className="py-3.5 font-bold text-gray-900">PKR {b.totalPrice?.toLocaleString()}</td>
                         <td className="py-3.5">
                           <span
                             className={`px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${
@@ -804,7 +804,7 @@ const AdminDashboardPage = ({ onOpenAuth }) => {
                         <td className="py-3.5 text-gray-600">{r.hotel?.name || 'Hotel'}</td>
                         <td className="py-3.5 capitalize font-medium text-gray-700">{r.roomType}</td>
                         <td className="py-3.5 text-gray-600">{r.capacity} Guests</td>
-                        <td className="py-3.5 font-bold text-amber-600">${r.pricePerNight}</td>
+                        <td className="py-3.5 font-bold text-amber-600">PKR {r.pricePerNight?.toLocaleString()}</td>
                         <td className="py-3.5">
                           <span className="inline-flex items-center gap-1 font-semibold text-amber-600">
                             <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />

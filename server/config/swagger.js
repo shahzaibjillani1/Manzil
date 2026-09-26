@@ -1,12 +1,12 @@
 export const swaggerDocument = {
   openapi: '3.0.0',
   info: {
-    title: 'QuickStay Luxury Hospitality REST API',
+    title: 'Manzil Pakistani Hospitality REST API',
     version: '1.0.0',
     description:
       'Production-grade MERN reservation engine featuring atomic double-booking concurrency locks, role-based authorization (Guest / Host / Admin), dynamic rate calculations, and live MongoDB persistence.',
     contact: {
-      name: 'QuickStay Engineering Team',
+      name: 'Manzil Engineering Team',
       url: 'http://localhost:5174',
     },
   },
@@ -41,11 +41,11 @@ export const swaggerDocument = {
         type: 'object',
         properties: {
           _id: { type: 'string', example: '67f76393197ac559e4089b72' },
-          name: { type: 'string', example: 'Al-Mirage Luxury Oasis Resort' },
-          description: { type: 'string', example: 'Overlooking pristine Arabian Gulf waters.' },
-          address: { type: 'string', example: 'Palm Jumeirah Crescent, West Bay' },
-          city: { type: 'string', example: 'Dubai' },
-          contact: { type: 'string', example: '+971 4 555 7800' },
+          name: { type: 'string', example: 'Margalla Heights Grand Hotel' },
+          description: { type: 'string', example: 'A benchmark of luxury nestled in Margalla Hills.' },
+          address: { type: 'string', example: 'Club Road, Near Serena Hotel, F-6/2' },
+          city: { type: 'string', example: 'Islamabad' },
+          contact: { type: 'string', example: '+92 51 2871234' },
           rating: { type: 'number', example: 5.0 },
           featuredImage: { type: 'string', example: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb' },
           amenities: { type: 'array', items: { type: 'string' }, example: ['Free WiFi', 'Pool Access'] },
@@ -192,7 +192,7 @@ export const swaggerDocument = {
         summary: 'Search and filter suites with live date availability',
         tags: ['Rooms'],
         parameters: [
-          { name: 'city', in: 'query', schema: { type: 'string' }, description: 'Filter by city (e.g. Dubai, New York, Singapore)' },
+          { name: 'city', in: 'query', schema: { type: 'string' }, description: 'Filter by city (e.g. Islamabad, Lahore, Karachi, Murree)' },
           { name: 'roomType', in: 'query', schema: { type: 'string' }, description: 'Filter by type (e.g. Luxury Suite, Double Bed)' },
           { name: 'minPrice', in: 'query', schema: { type: 'number' } },
           { name: 'maxPrice', in: 'query', schema: { type: 'number' } },
@@ -314,10 +314,10 @@ export const swaggerDocument = {
                 type: 'object',
                 required: ['name', 'city', 'address', 'contact'],
                 properties: {
-                  name: { type: 'string', example: 'Azure Marina Resort' },
-                  city: { type: 'string', example: 'Singapore' },
-                  address: { type: 'string', example: '10 Bayfront Way' },
-                  contact: { type: 'string', example: '+65 6688 8868' },
+                  name: { type: 'string', example: 'Pearl Continental Luxury Suites' },
+                  city: { type: 'string', example: 'Lahore' },
+                  address: { type: 'string', example: 'Shahrah-e-Quaid-e-Azam, The Mall' },
+                  contact: { type: 'string', example: '+92 42 36362222' },
                   description: { type: 'string' },
                   featuredImage: { type: 'string' },
                 },

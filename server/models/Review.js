@@ -30,7 +30,6 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-// Prevent user from submitting multiple reviews on the same room
 reviewSchema.index({ user: 1, room: 1 }, { unique: true });
 
 const Review = mongoose.model('Review', reviewSchema);

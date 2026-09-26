@@ -29,17 +29,22 @@ const Footer = () => {
               <div className="p-2 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 text-white shadow-md">
                 <Building2 className="w-5 h-5" />
               </div>
-              <span className="font-playfair text-2xl font-bold tracking-tight text-white">
-                QuickStay<span className="text-amber-500">.</span>
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span className="font-playfair text-2xl font-bold tracking-tight text-white">
+                  Manzil<span className="text-amber-500">.</span>
+                </span>
+                <span className="text-sm font-semibold text-amber-500">
+                  منزل
+                </span>
+              </div>
             </Link>
             <p className="text-sm text-gray-400 leading-relaxed max-w-sm">
-              Curating exceptional stays across global metropolises and secluded tropical sanctuaries. Engineered with cutting-edge full-stack architecture.
+              Curating authentic luxury stays and mountain retreats across Pakistan. From the Margalla Hills to the high peaks of Hunza, experience warm Pakistani hospitality.
             </p>
             <div className="pt-2">
               <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                MERN Stack Production Architecture
+                Pakistan's Premier Hospitality Engine
               </span>
             </div>
           </div>
@@ -47,32 +52,37 @@ const Footer = () => {
           {/* Quick links */}
           <div>
             <h4 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">
-              Explore
+              Destinations
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
-                <Link to="/rooms?city=Dubai" className="hover:text-amber-400 transition-colors">
-                  Dubai Resorts
+                <Link to="/rooms?city=Islamabad" className="hover:text-amber-400 transition-colors">
+                  Islamabad Hotels
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=New York" className="hover:text-amber-400 transition-colors">
-                  New York Suites
+                <Link to="/rooms?city=Lahore" className="hover:text-amber-400 transition-colors">
+                  Lahore Heritage
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=Singapore" className="hover:text-amber-400 transition-colors">
-                  Singapore Escapes
+                <Link to="/rooms?city=Karachi" className="hover:text-amber-400 transition-colors">
+                  Karachi Seaside
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=London" className="hover:text-amber-400 transition-colors">
-                  London Heritage
+                <Link to="/rooms?city=Murree" className="hover:text-amber-400 transition-colors">
+                  Murree Hills
                 </Link>
               </li>
               <li>
-                <Link to="/rooms?city=Paris" className="hover:text-amber-400 transition-colors">
-                  Parisian Balconies
+                <Link to="/rooms?city=Swat" className="hover:text-amber-400 transition-colors">
+                  Swat Valley
+                </Link>
+              </li>
+              <li>
+                <Link to="/rooms?city=Hunza" className="hover:text-amber-400 transition-colors">
+                  Hunza Lodges
                 </Link>
               </li>
             </ul>
@@ -146,7 +156,7 @@ const Footer = () => {
 
         {/* Bottom copyright */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-gray-400 gap-4">
-          <p>© {new Date().getFullYear()} QuickStay Luxury Hospitality Inc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Manzil Hospitality Group (Pvt.) Ltd. All rights reserved.</p>
           <div className="flex items-center space-x-6">
             <span>Concurrency Guarded</span>
             <span>•</span>

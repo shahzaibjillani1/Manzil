@@ -4,46 +4,46 @@ import { MapPin, ArrowUpRight } from 'lucide-react';
 
 const destinations = [
   {
-    city: 'Dubai',
-    country: 'United Arab Emirates',
-    count: 'Pristine Coastal Luxury & Palm Resorts',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800',
-    tag: 'Skyline & Oasis',
+    city: 'Islamabad',
+    country: 'Pakistan',
+    count: 'Margalla Foothills, Diplomatic Suites & Faisal Mosque',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=800',
+    tag: 'Capital Elegance',
   },
   {
-    city: 'New York',
-    country: 'United States',
-    count: 'Manhattan Suites & Skyline Penthouses',
-    image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=800',
-    tag: 'Metropolitan Elegance',
+    city: 'Lahore',
+    country: 'Pakistan',
+    count: 'Mughal Heritage, Mall Road Luxury & Royal Forts',
+    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=800',
+    tag: 'Cultural Heart',
   },
   {
-    city: 'Singapore',
-    country: 'Singapore',
-    count: 'Waterfront Sanctuaries & Infinity Pools',
-    image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=800',
-    tag: 'Futuristic Haven',
+    city: 'Karachi',
+    country: 'Pakistan',
+    count: 'Clifton Beachfront, Arabian Sea Sunsets & Seaside Dining',
+    image: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=800',
+    tag: 'City of Lights',
   },
   {
-    city: 'London',
-    country: 'United Kingdom',
-    count: 'Mayfair Palaces & Historic Residences',
-    image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=800',
-    tag: 'Timeless British Charm',
+    city: 'Murree',
+    country: 'Pakistan',
+    count: 'Pine Forest Lodges, Kashmir Point & Misty Peaks',
+    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?q=80&w=800',
+    tag: 'Hill Station Retreat',
   },
   {
-    city: 'Paris',
-    country: 'France',
-    count: 'Chic Parisian Suites & Balcony Views',
+    city: 'Swat',
+    country: 'Pakistan',
+    count: 'Emerald River Valleys, Malam Jabba & Alpine Serenity',
     image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=800',
-    tag: 'Romantic City of Light',
+    tag: 'Switzerland of Pakistan',
   },
   {
-    city: 'Bali',
-    country: 'Indonesia',
-    count: 'Jungle Sanctuary Villas & Private Pools',
+    city: 'Hunza',
+    country: 'Pakistan',
+    count: 'Rakaposhi Views, Karakoram Pass & Stargazing Lodges',
     image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?q=80&w=800',
-    tag: 'Tropical Serenity',
+    tag: 'Northern Shangrila',
   },
 ];
 
@@ -58,14 +58,14 @@ const FeaturedDestinations = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
           <div>
             <span className="text-xs font-bold tracking-widest text-amber-600 uppercase">
-              Global Sanctuaries
+              Pakistani Sanctuaries • منزل
             </span>
             <h2 className="font-playfair text-3xl sm:text-4xl font-bold text-gray-900 mt-2">
-              Explore Iconic Destinations
+              Explore Iconic Pakistani Destinations
             </h2>
           </div>
           <p className="text-gray-500 text-sm max-w-md mt-3 md:mt-0">
-            Handpicked metropolitan landmarks and secluded tropical paradises vetted for unparalleled service and bespoke guest comfort.
+            Handpicked historic landmarks, lush northern valleys, and coastal sea views across Pakistan, vetted for warm hospitality and comfort.
           </p>
         </div>
 

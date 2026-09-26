@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { X, Lock, Mail, User, Phone, Building2 } from 'lucide-react';
 
@@ -44,7 +44,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
             <Building2 className="w-7 h-7" />
           </div>
           <h3 className="font-playfair text-2xl font-bold text-gray-900">
-            {mode === 'login' ? 'Welcome to QuickStay' : 'Create Your Account'}
+            {mode === 'login' ? 'Welcome to Manzil • منزل' : 'Create Your Manzil Account'}
           </h3>
           <p className="text-xs text-gray-500 mt-1">
             {mode === 'login'
@@ -155,7 +155,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
             {mode === 'register' && (
               <div>
                 <label className="block text-xs font-semibold text-gray-700 mb-1">
-                  I want to use QuickStay as:
+                  I want to use Manzil as:
                 </label>
                 <div className="grid grid-cols-2 gap-2">
                   <button

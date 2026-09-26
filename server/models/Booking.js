@@ -78,7 +78,6 @@ const bookingSchema = new mongoose.Schema(
   }
 );
 
-// Generate reference code before saving
 bookingSchema.pre('save', function (next) {
   if (!this.bookingReference) {
     const randomHex = Math.random().toString(36).substring(2, 8).toUpperCase();

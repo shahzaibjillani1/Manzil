@@ -48,11 +48,16 @@ const Navbar = ({ onOpenAuth }) => {
               <Building2 className="w-6 h-6" />
             </div>
             <div>
-              <span className="font-playfair text-2xl font-bold tracking-tight text-gray-900 group-hover:text-amber-600 transition-colors">
-                QuickStay<span className="text-amber-600">.</span>
-              </span>
-              <span className="block text-[10px] uppercase tracking-widest text-gray-600 -mt-1 font-semibold">
-                Luxury Suites & Resorts
+              <div className="flex items-center gap-1.5">
+                <span className="font-playfair text-2xl font-bold tracking-tight text-gray-900 group-hover:text-amber-600 transition-colors">
+                  Manzil<span className="text-amber-600">.</span>
+                </span>
+                <span className="text-sm font-semibold text-amber-600 tracking-normal font-sans">
+                  منزل
+                </span>
+              </div>
+              <span className="block text-[10px] uppercase tracking-widest text-gray-600 -mt-0.5 font-semibold">
+                Pakistani Luxury Hospitality
               </span>
             </div>
           </Link>
