@@ -1,4 +1,4 @@
-# Manzil (منزل) — Enterprise Pakistani Hospitality & Hotel Reservation Platform
+# Manzil (منزل) — Pakistani Hospitality & Hotel Reservation Platform
 
 [![React](https://img.shields.io/badge/React-19.2-61dafb?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![NodeJS](https://img.shields.io/badge/Node.js-v20+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -14,6 +14,9 @@
 **Manzil (منزل)** is a production-grade, full-stack MERN hotel booking and hospitality operations platform celebrating authentic Pakistani luxury and culture across Islamabad, Lahore, Karachi, Murree, Swat, and Hunza. Engineered with **React 19**, **Redux Toolkit (RTK)**, **Tailwind CSS v4**, **Node.js/Express**, and **MongoDB (Mongoose 8)**, it bridges consumer-facing reservations in PKR with an enterprise-tier Host Management Console and a SuperAdmin Control Portal.
 
 The platform is designed with senior architectural principles: **centralized Redux Toolkit state management with async thunks**, **atomic date-overlap reservation locks**, **stateless JWT authentication with role-based access control (RBAC)**, **Swagger OpenAPI 3.0 documentation**, and **MongoDB aggregation pipelines for financial intelligence**.
+
+🔗 **Live Demo**: [https://manzil-zbob.vercel.app/](https://manzil-zbob.vercel.app/)
+🔗 **Live API**: [https://manzil-liart.vercel.app/](https://manzil-liart.vercel.app/)
 
 ---
 
@@ -189,9 +192,9 @@ Pre-configured accounts for testing and evaluation across all platform roles:
 
 | Role | Email | Password | Access Portal |
 | :--- | :--- | :--- | :--- |
-| **Platform Administrator** | `admin@manzil.pk` | `admin123` | [http://localhost:5173/admin](http://localhost:5173/admin) |
-| **Verified Hotel Host** | `host@manzil.pk` | `password123` | [http://localhost:5173/dashboard](http://localhost:5173/dashboard) |
-| **Traveler (Guest)** | `guest@manzil.pk` | `password123` | [http://localhost:5173/my-bookings](http://localhost:5173/my-bookings) |
+| **Platform Administrator** | `admin@manzil.pk` | `admin123` | [https://manzil-zbob.vercel.app/admin](https://manzil-zbob.vercel.app/admin) |
+| **Verified Hotel Host** | `host@manzil.pk` | `password123` | [https://manzil-zbob.vercel.app/dashboard](https://manzil-zbob.vercel.app/dashboard) |
+| **Traveler (Guest)** | `guest@manzil.pk` | `password123` | [https://manzil-zbob.vercel.app/my-bookings](https://manzil-zbob.vercel.app/my-bookings) |
 
 ---
 
@@ -199,8 +202,8 @@ Pre-configured accounts for testing and evaluation across all platform roles:
 
 Manzil exposes a comprehensive, interactive OpenAPI 3.0 specification powered by `swagger-ui-express`:
 
-- **Swagger Documentation URL**: [http://localhost:5000/api/docs](http://localhost:5000/api/docs)
-- **Alternate Route**: [http://localhost:5000/api-docs](http://localhost:5000/api-docs)
+- **Swagger Documentation URL**: [https://manzil-liart.vercel.app/api/docs](https://manzil-liart.vercel.app/api/docs)
+- **Alternate Route**: [https://manzil-liart.vercel.app/api-docs](https://manzil-liart.vercel.app/api-docs)
 
 From Swagger UI, you can:
 1. Review all endpoint request/response JSON schemas.
@@ -381,6 +384,7 @@ NODE_ENV=development
 MONGO_URI=mongodb://127.0.0.1:27017/hotel_booking_db
 JWT_SECRET=manzil_super_secret_jwt_key_2026_production
 JWT_EXPIRE=30d
+CLIENT_URL=https://manzil-zbob.vercel.app
 
 # Email (optional — uses Ethereal Email sandbox if omitted)
 SMTP_HOST=smtp.gmail.com
@@ -394,7 +398,7 @@ SMTP_FROM="Manzil Reservations" <reservations@manzil.pk>
 
 ```env
 # client/.env
-VITE_API_URL=http://localhost:5000/api
+VITE_API_URL=https://manzil-liart.vercel.app/api
 ```
 
 ### 4. Seed the Database
@@ -411,16 +415,21 @@ node utils/createAdmin.js
 
 ### 5. Launch the Platform
 
-Run both client and server concurrently using the root runner:
+Run both client and server concurrently using the root runner for local development:
 
 ```bash
 npm run dev
 ```
 
-- **Frontend Client**: [http://localhost:5173](http://localhost:5173)
-- **Backend Core API**: [http://localhost:5000/api](http://localhost:5000/api)
-- **Interactive Swagger Docs**: [http://localhost:5000/api/docs](http://localhost:5000/api/docs)
-- **API Health Check**: [http://localhost:5000/api/health](http://localhost:5000/api/health)
+- **Frontend Client (Local)**: [http://localhost:5173](http://localhost:5173)
+- **Backend Core API (Local)**: [http://localhost:5000/api](http://localhost:5000/api)
+
+Or access the live deployed instances directly:
+
+- **Frontend Client (Live)**: [https://manzil-zbob.vercel.app/](https://manzil-zbob.vercel.app/)
+- **Backend Core API (Live)**: [https://manzil-liart.vercel.app/api](https://manzil-liart.vercel.app/api)
+- **Interactive Swagger Docs (Live)**: [https://manzil-liart.vercel.app/api/docs](https://manzil-liart.vercel.app/api/docs)
+- **API Health Check (Live)**: [https://manzil-liart.vercel.app/api/health](https://manzil-liart.vercel.app/api/health)
 
 ---
 
@@ -446,19 +455,23 @@ dist/assets/index-7jrMfyh3.js     518.81 kB │ gzip: 147.99 kB
 
 ### Testing the REST API with cURL / PowerShell
 
+Against the live deployment:
+
 ```bash
 # 1. Healthcheck
-curl http://localhost:5000/api/health
+curl https://manzil-liart.vercel.app/api/health
 
 # 2. Login as Administrator
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST https://manzil-liart.vercel.app/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email":"admin@manzil.pk","password":"admin123"}'
 
 # 3. Query Real-Time Platform Analytics (using token from step 2)
-curl http://localhost:5000/api/admin/stats \
+curl https://manzil-liart.vercel.app/api/admin/stats \
   -H "Authorization: Bearer <TOKEN>"
 ```
+
+Against a local instance, replace the base URL with `http://localhost:5000`.
 
 ---
 
