@@ -1,4 +1,4 @@
-# Manzil (منزل) — Enterprise Pakistani Hospitality & Hotel Reservation Platform
+# Manzil (منزل) — Pakistani Hospitality & Hotel Reservation Platform
 
 [![React](https://img.shields.io/badge/React-19.2-61dafb?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 [![NodeJS](https://img.shields.io/badge/Node.js-v20+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
